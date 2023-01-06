@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import FirebaseCore
+import FirebaseAuth
+import FirebaseFirestore
 
 class SignUpVC: UIViewController {
     let databaseInstance = DBManager.sharedInstance
@@ -13,7 +16,10 @@ class SignUpVC: UIViewController {
     let myIndexPath = [[0,1,2,3,4,5],[6,7,8,9]]
     var myImage: UIImage?
     var user : UserModel = UserModel()
-   
+    let authenticate = Auth.auth()
+    let db = Firestore.firestore()
+
+    
     @IBAction func closeAction(_ sender: UIButton) {
         self.dismiss(animated: true)
     }
@@ -78,7 +84,7 @@ extension SignUpVC: UITableViewDataSource, UITableViewDelegate {
         
        else if indexPath.section == 1, indexPath.row == dataArray[indexPath.section].count - 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "SubmitButtonCell") as? SubmitButtonCell
-            cell?.actionHandler = {
+           cell?.actionHandler = { [self] in
                 if ((self.user.name?.isEmpty)
                     == nil) {
                     self.showMessage(title: "Please Enter a Valid Name")
@@ -122,14 +128,27 @@ extension SignUpVC: UITableViewDataSource, UITableViewDelegate {
                     if let _ = DBManager.sharedInstance.getUserDetail(email: self.user.email ?? ""){
                         self.showMessage(title: "Email Id Exist")
                         return
-                    }
-                    else{
-                        
-                        self.databaseInstance.insert(user: self.user)
-                        debugPrint("Inserted \(self.user.email as Any) in Database")
+        }
+            else{
+                self.authenticate.createUser(withEmail: self.user.email ?? "", password: self.user.password ?? "") {
+                    authResult, error in
+                    debugPrint("\(String(describing: authResult?.user.uid))")
+                    self.databaseInstance.insert(user: self.user)
+                    debugPrint("Inserted \(self.user.email as Any) in Database")
+                    self.db.collection("Users").document("\(String(describing: authResult?.user.uid))").setData([
+                "name": "\(String(describing: self.user.name))",
+                "email": "\(String(describing: self.user.email))",
+                "mobileNumber":"\(String(describing: self.user.mobile))",
+                "password":"\(String(describing: self.user.password))",
+                "address":"\(String(describing: self.user.address))",
+                "state":"\(String(describing: self.user.state))",
+                "pincode":"\(String(describing: self.user.pincode))",
+                "profilePic" : "\(String(describing: self.user.profilePic))"
+                        ])
                     }
                 }
             }
+        }
             cell?.SubmitButtonCell.setTitle("Submit", for: .normal)
          return cell ?? UITableViewCell()
             

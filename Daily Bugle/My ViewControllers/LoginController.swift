@@ -6,50 +6,76 @@
 //
 
 import UIKit
+import FirebaseCore
+import FirebaseAuth
+import FirebaseFirestore
 
 class LoginController: UIViewController {
     
     let myUsers = DBManager.sharedInstance
+    let authenticate = Auth.auth()
+    var userAuth = Auth.auth().currentUser
+    let db = Firestore.firestore()
 
     @IBOutlet weak var loginLogo: UIImageView!
     @IBOutlet weak var userNameTxtField: UITextField!
-    
     @IBOutlet weak var passwordTxtField: UITextField!
-    @IBAction func logInAction(_ sender: UIButton) {
-       
-       
-        if ((userNameTxtField.text?.isEmpty) == nil || userNameTxtField.text?.isValidEmail() == false){
+    @IBOutlet weak var logInButton: UIButton!
+
+    @IBAction func logInAction(_ sender: UIButton)
+    {
+        if ((userNameTxtField.text?.isEmpty) == nil || userNameTxtField.text?.isValidEmail() == false)
+        {
             showMessage(title: "Enter a Valid Mail")
-            debugPrint("User Entered Invalid Mail While Logging")        }
-        else if passwordTxtField.text?.utf8CString.count ?? 0 <= 5 {
+            debugPrint("User Entered Invalid Mail While Logging")
+        }
+        else if passwordTxtField.text?.utf8CString.count ?? 0 <= 5
+        {
             showMessage(title: "Password Must be more than 5 characters")
             debugPrint("User Entered Less Number of Characters in Password while Logging")
         }
-        else if ((userNameTxtField.text?.isValidEmail()) == true){
+        else if ((userNameTxtField.text?.isValidEmail()) == true)
+        {
             let currentUser = myUsers.getUserDetail(email: userNameTxtField.text ?? "")
             passwordTxtField.isSecureTextEntry = true
-            if currentUser != nil{
-                if currentUser?.password == passwordTxtField.text {
-                    self.dismiss(animated: true)
-                    debugPrint("User \(currentUser?.name as Any) Has Logged In")
-                    let myVC = MainVC.init(nibName: "MainVC", bundle: nil)
-                    let myNav = UINavigationController.init(rootViewController: myVC)
-                    myNav.modalTransitionStyle = .crossDissolve
-                    myNav.modalPresentationStyle = .fullScreen
-                    present(myNav, animated: true)
-                } else {
+            if currentUser != nil
+            {
+                if currentUser?.password == passwordTxtField.text
+                {
+                    authenticate.signIn(withEmail: userNameTxtField.text ?? "", password: passwordTxtField.text ?? "")
+                    debugPrint("Signed in as \(String(describing: self.authenticate.currentUser?.email)) using Firebase Authentication")
+                    db.collection("Users").document("\(String(describing: authenticate.currentUser?.uid))").getDocument
+                    { (document, error) in
+                        if let document = document, document.exists
+                        {
+                            let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+                            debugPrint("Current User Document data: \(dataDescription)")
+                            self.dismiss(animated: true)
+                            debugPrint("User \(currentUser?.name as Any) Has Logged In from SQlite")
+                            let myVC = MainVC.init(nibName: "MainVC", bundle: nil)
+                            let myNav = UINavigationController.init(rootViewController: myVC)
+                            myNav.modalTransitionStyle = .crossDissolve
+                            myNav.modalPresentationStyle = .fullScreen
+                            self.present(myNav, animated: true)
+                         } else
+                            {
+                            debugPrint(" User Document does not exist")
+                            }
+                     }
+                 } else
+                    {
                     showMessage(title: "Password is Incorrect")
                     debugPrint("User Entered Wrong Password While Logging")
-                }
-            }
-        }
-        else {
+                    }
+             }
+         }
+        else
+            {
             showMessage(title: "This User Does Not Exist, Please Sign Up")
             debugPrint("User Entered Mail Which Do Not Exist While Logging")
-        }
-    }
+            }
+    }//Log In Action ends here
     
-    @IBOutlet weak var logInButton: UIButton!
 
     let circle1 = CAShapeLayer()
     let circle2 = CAShapeLayer()
