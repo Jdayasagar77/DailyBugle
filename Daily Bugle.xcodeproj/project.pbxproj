@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		491279370C3D03E5DA8EA1B8 /* Pods_Daily_Bugle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C728D72BCB818894DE9869E8 /* Pods_Daily_Bugle.framework */; };
 		53033313293B4DF0004E6BD3 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53033311293B4DF0004E6BD3 /* SignUpVC.swift */; };
 		53033314293B4DF0004E6BD3 /* SignUpVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53033312293B4DF0004E6BD3 /* SignUpVC.xib */; };
 		53033317293B5304004E6BD3 /* HamburgerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53033315293B5304004E6BD3 /* HamburgerVC.swift */; };
@@ -70,6 +71,9 @@
 		53B1CA38295EA8A200A9F000 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		53E8DE2429518C74001EB3F8 /* SubmitButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitButtonCell.swift; sourceTree = "<group>"; };
 		53E8DE2529518C74001EB3F8 /* SubmitButtonCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubmitButtonCell.xib; sourceTree = "<group>"; };
+		785ED9F0656F001C0E8E5E72 /* Pods-Daily Bugle.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Daily Bugle.debug.xcconfig"; path = "Target Support Files/Pods-Daily Bugle/Pods-Daily Bugle.debug.xcconfig"; sourceTree = "<group>"; };
+		C728D72BCB818894DE9869E8 /* Pods_Daily_Bugle.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Daily_Bugle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFDC1BD0F3D2166DB7D04579 /* Pods-Daily Bugle.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Daily Bugle.release.xcconfig"; path = "Target Support Files/Pods-Daily Bugle/Pods-Daily Bugle.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,12 +81,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				491279370C3D03E5DA8EA1B8 /* Pods_Daily_Bugle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D92E1E9481F009EEFEBB72D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				785ED9F0656F001C0E8E5E72 /* Pods-Daily Bugle.debug.xcconfig */,
+				FFDC1BD0F3D2166DB7D04579 /* Pods-Daily Bugle.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		53033319293B5311004E6BD3 /* My ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -130,6 +145,8 @@
 			children = (
 				5368F7EA29375010009C1584 /* Daily Bugle */,
 				5368F7E929375010009C1584 /* Products */,
+				1D92E1E9481F009EEFEBB72D /* Pods */,
+				7F482FC321427CAC472BE4E6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -176,6 +193,14 @@
 			path = "My Extension";
 			sourceTree = "<group>";
 		};
+		7F482FC321427CAC472BE4E6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C728D72BCB818894DE9869E8 /* Pods_Daily_Bugle.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -183,9 +208,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5368F7FF29375012009C1584 /* Build configuration list for PBXNativeTarget "Daily Bugle" */;
 			buildPhases = (
+				9F78268D99933DC799EF7BA5 /* [CP] Check Pods Manifest.lock */,
 				5368F7E429375010009C1584 /* Sources */,
 				5368F7E529375010009C1584 /* Frameworks */,
 				5368F7E629375010009C1584 /* Resources */,
+				DEA75A5F0A05F434C5D7623B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -250,6 +277,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9F78268D99933DC799EF7BA5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Daily Bugle-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DEA75A5F0A05F434C5D7623B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Daily Bugle/Pods-Daily Bugle-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Daily Bugle/Pods-Daily Bugle-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Daily Bugle/Pods-Daily Bugle-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5368F7E429375010009C1584 /* Sources */ = {
@@ -406,6 +475,7 @@
 		};
 		5368F80029375012009C1584 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 785ED9F0656F001C0E8E5E72 /* Pods-Daily Bugle.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -433,6 +503,7 @@
 		};
 		5368F80129375012009C1584 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FFDC1BD0F3D2166DB7D04579 /* Pods-Daily Bugle.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
