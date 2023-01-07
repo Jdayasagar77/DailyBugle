@@ -16,7 +16,7 @@ class LoginController: UIViewController {
     let authenticate = Auth.auth()
     var userAuth = Auth.auth().currentUser
     let db = Firestore.firestore()
-
+//    var mainVC = MainVC.init(nibName: "MainVC", bundle: nil)
     @IBOutlet weak var loginLogo: UIImageView!
     @IBOutlet weak var userNameTxtField: UITextField!
     @IBOutlet weak var passwordTxtField: UITextField!

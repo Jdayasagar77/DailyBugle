@@ -9,6 +9,7 @@ import UIKit
 
 class MainVC: UIViewController {
     
+    @IBOutlet weak var mainTable: UITableView!
     private var hamburgerVC = HamburgerVC(nibName: "HamburgerVC", bundle: nil)
     private var sideMenuShadowView: UIView!
     private var draggingIsEnabled: Bool = false
@@ -19,7 +20,9 @@ class MainVC: UIViewController {
     private var sideMenuTrailingConstraint: NSLayoutConstraint!
     private var revealSideMenuOnTop: Bool = true
     var gestureEnabled: Bool = true
-
+//    var logVC = LoginController.init(nibName: "LoginController", bundle: nil)
+//    var articleHandler: (()->())?
+    var myArticles : [Article]?
     @IBOutlet var sideMenuBtn: UIBarButtonItem!
     @IBAction open func revealSideMenu() {
         self.sideMenuState(expanded: self.isExpanded ? false : true)
@@ -31,6 +34,8 @@ class MainVC: UIViewController {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         self.revealViewController()?.gestureEnabled = true
+         debugPrint(self.myArticles as Any)
+      
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -40,6 +45,31 @@ class MainVC: UIViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
+        let apiUrl = "https://newsapi.org/v2/top-headlines?country=in&apiKey=c554d5e111b044049820eaca8a680944"
+        guard let apiurl = URL.init(string: apiUrl) else {return}
+     let task =  URLSession.shared.dataTask(with: apiurl) { data, response, error in
+            if let error = error{
+                debugPrint(error.localizedDescription)
+                return
+            }
+            if let data = data{
+                debugPrint("News Has Been Fetched")
+                do{
+                    let jsonData = try JSONDecoder().decode(NewsAPI.self, from: data)
+                    debugPrint(jsonData.articles as Any)
+                    self.myArticles = jsonData.articles
+                } catch{
+                    debugPrint(error.localizedDescription)
+                }
+    }
+
+    }
+        task.resume()
+
+
              let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture))
              panGestureRecognizer.delegate = self
              view.addGestureRecognizer(panGestureRecognizer)

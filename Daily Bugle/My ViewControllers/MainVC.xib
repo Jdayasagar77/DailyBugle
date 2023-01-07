@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainVC" customModule="Daily_Bugle" customModuleProvider="target">
             <connections>
+                <outlet property="mainTable" destination="bih-UV-bGq" id="Flw-gh-KIM"/>
                 <outlet property="sideMenuBtn" destination="npM-Rx-Mef" id="DTi-RH-4mb"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -31,11 +32,19 @@
                         </navigationItem>
                     </items>
                 </navigationBar>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="bih-UV-bGq">
+                    <rect key="frame" x="0.0" y="103" width="393" height="715"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </tableView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="6sZ-dc-Hea" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="2w4-TH-TQk"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="bih-UV-bGq" secondAttribute="bottom" id="321-8U-UDv"/>
+                <constraint firstItem="bih-UV-bGq" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ETF-XS-gUf"/>
+                <constraint firstItem="bih-UV-bGq" firstAttribute="top" secondItem="6sZ-dc-Hea" secondAttribute="bottom" id="FdN-7k-igp"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="bih-UV-bGq" secondAttribute="trailing" id="MSg-La-wFw"/>
                 <constraint firstItem="6sZ-dc-Hea" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="aM0-u0-LdE"/>
                 <constraint firstItem="6sZ-dc-Hea" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="u24-wh-WPn"/>
             </constraints>
