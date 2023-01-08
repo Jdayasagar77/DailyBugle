@@ -20,7 +20,6 @@ extension UIViewController {
 
 
 
-
 extension String {
     /// Validate email Id
     ///
@@ -31,4 +30,25 @@ extension String {
         let result = emailTest.evaluate(with: self)
         return result
     }
+}
+
+extension Int {
+    var isEven: Bool { isMultiple(of: 2) }
+    var isOdd:  Bool { !isEven }
+}
+
+extension Int {
+    public var isPrime: Bool {
+        guard self > 1 else {
+          return false
+        }
+        
+        for i in 2..<self {
+          if self % i == 0 {
+            return false
+          }
+        }
+        
+        return true
+      }
 }

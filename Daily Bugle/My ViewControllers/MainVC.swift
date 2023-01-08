@@ -22,7 +22,8 @@ class MainVC: UIViewController {
     var gestureEnabled: Bool = true
 //    var logVC = LoginController.init(nibName: "LoginController", bundle: nil)
 //    var articleHandler: (()->())?
-    var myArticles : [Article]?
+    var myArticles : NewsAPI?
+
     @IBOutlet var sideMenuBtn: UIBarButtonItem!
     @IBAction open func revealSideMenu() {
         self.sideMenuState(expanded: self.isExpanded ? false : true)
@@ -34,20 +35,7 @@ class MainVC: UIViewController {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         self.revealViewController()?.gestureEnabled = true
-         debugPrint(self.myArticles as Any)
       
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-            super.viewWillDisappear(animated)
-            self.revealViewController()?.gestureEnabled = true
-        }
-    
-    override public func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
-        
         let apiUrl = "https://newsapi.org/v2/top-headlines?country=in&apiKey=c554d5e111b044049820eaca8a680944"
         guard let apiurl = URL.init(string: apiUrl) else {return}
      let task =  URLSession.shared.dataTask(with: apiurl) { data, response, error in
@@ -59,8 +47,8 @@ class MainVC: UIViewController {
                 debugPrint("News Has Been Fetched")
                 do{
                     let jsonData = try JSONDecoder().decode(NewsAPI.self, from: data)
-                    debugPrint(jsonData.articles as Any)
-                    self.myArticles = jsonData.articles
+                 //   debugPrint(jsonData.articles as Any)
+                    self.myArticles = jsonData
                 } catch{
                     debugPrint(error.localizedDescription)
                 }
@@ -68,6 +56,24 @@ class MainVC: UIViewController {
 
     }
         task.resume()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        self.mainTable.reloadData()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+            super.viewWillDisappear(animated)
+            self.revealViewController()?.gestureEnabled = true
+        }
+    
+    override public func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.mainTable.register(UINib(nibName: "NewsFeedCell", bundle: nil), forCellReuseIdentifier: "NewsFeedCell")
+        self.mainTable.delegate = self
+        self.mainTable.dataSource = self
+        self.mainTable.estimatedRowHeight = 300
+        
+
 
 
              let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture))
@@ -373,3 +379,44 @@ extension UIViewController {
      //   self.navigationItem.rightBarButtonItem = myButton1
         //self.navigationItem.leftBarButtonItem?.target = revealViewController()
         //self.navigationItem.leftBarButtonItem?.action = #selector(revealViewController()?.revealSideMenu)
+
+
+
+
+
+
+
+
+
+
+
+
+extension MainVC : UITableViewDelegate,UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if self.myArticles != nil {
+            return self.myArticles?.articles?.count ?? 0
+        }
+        else {return 0}
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.mainTable.dequeueReusableCell(withIdentifier: "NewsFeedCell") as? NewsFeedCell
+        cell?.articleTitle.text = self.myArticles?.articles?[indexPath.row].title
+     //   cell?.articleImage.image =  self.myArticles?.articles?[indexPath.row].urlToImage
+        cell?.articleImage.image = self.myArticles?.articles?[indexPath.row].loadFrom()
+        cell?.articlePublished.text = self.myArticles?.articles?[indexPath.row].publishedAt
+        cell?.saveButton.tintColor = .black
+        if indexPath.row.isOdd {
+            cell?.contentView.backgroundColor = .gray
+            cell?.articleTitle.textColor = .white
+            cell?.articlePublished.textColor = .white
+            cell?.saveButton.tintColor = .white
+        }
+        
+        return cell ?? UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+}
