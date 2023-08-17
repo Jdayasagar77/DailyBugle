@@ -10,18 +10,15 @@ import FirebaseCore
 import FirebaseAuth
 import FirebaseFirestore
 
+
+
 class LoginController: UIViewController {
-    
-    let myUsers = DBManager.sharedInstance
-    let authenticate = Auth.auth()
-    var userAuth = Auth.auth().currentUser
-    let db = Firestore.firestore()
-//    var mainVC = MainVC.init(nibName: "MainVC", bundle: nil)
+
     @IBOutlet weak var loginLogo: UIImageView!
     @IBOutlet weak var userNameTxtField: UITextField!
     @IBOutlet weak var passwordTxtField: UITextField!
     @IBOutlet weak var logInButton: UIButton!
-
+    var userMailDelegate: CurrentUser?
     @IBAction func logInAction(_ sender: UIButton)
     {
         if ((userNameTxtField.text?.isEmpty) == nil || userNameTxtField.text?.isValidEmail() == false)
@@ -36,44 +33,32 @@ class LoginController: UIViewController {
         }
         else if ((userNameTxtField.text?.isValidEmail()) == true)
         {
-            let currentUser = myUsers.getUserDetail(email: userNameTxtField.text ?? "")
             passwordTxtField.isSecureTextEntry = true
-            if currentUser != nil
-            {
-                if currentUser?.password == passwordTxtField.text
+            Auth.auth().signIn(withEmail: userNameTxtField.text!, password: passwordTxtField.text!) { [weak self] authResult, error in
+            guard let strongSelf = self else { return }
+                if let user = authResult?.user {
+                    strongSelf.dismiss(animated: true)
+                    self?.userMailDelegate?.activeUser(user.email!)
+                    debugPrint("User \(user.email as Any) Has Logged In from Firebase")
+                                               let myVC = MainVC.init(nibName: "MainVC", bundle: nil)
+                                               let myNav = UINavigationController.init(rootViewController: myVC)
+                                               myNav.modalTransitionStyle = .crossDissolve
+                                               myNav.modalPresentationStyle = .fullScreen
+                    strongSelf.present(myNav, animated: true)
+                }
+                else
                 {
-                    authenticate.signIn(withEmail: userNameTxtField.text ?? "", password: passwordTxtField.text ?? "")
-                    debugPrint("Signed in as \(String(describing: self.authenticate.currentUser?.email)) using Firebase Authentication")
-                    db.collection("Users").document("\(String(describing: authenticate.currentUser?.uid))").getDocument
-                    { (document, error) in
-                        if let document = document, document.exists
-                        {
-                            let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-                            debugPrint("Current User Document data: \(dataDescription)")
-                            self.dismiss(animated: true)
-                            debugPrint("User \(currentUser?.name as Any) Has Logged In from SQlite")
-                            let myVC = MainVC.init(nibName: "MainVC", bundle: nil)
-                            let myNav = UINavigationController.init(rootViewController: myVC)
-                            myNav.modalTransitionStyle = .crossDissolve
-                            myNav.modalPresentationStyle = .fullScreen
-                            self.present(myNav, animated: true)
-                         } else
-                            {
-                            debugPrint(" User Document does not exist")
-                            }
-                     }
-                 } else
-                    {
-                    showMessage(title: "Password is Incorrect")
-                    debugPrint("User Entered Wrong Password While Logging")
-                    }
-             }
-         }
-        else
-            {
-            showMessage(title: "This User Does Not Exist, Please Sign Up")
-            debugPrint("User Entered Mail Which Do Not Exist While Logging")
+                    strongSelf.showMessage(title: "Email or Password is Incorrect")
+                    debugPrint("User Entered Wrong Password or Mail While Logging")
+                }
             }
+                    debugPrint("Signed in as \(String(describing:  Auth.auth().currentUser?.email)) using Firebase Authentication")
+        }
+//        else
+//            {
+//            showMessage(title: "This User Does Not Exist, Please Sign Up")
+//            debugPrint("User Entered Mail Which Do Not Exist While Logging")
+//            }
     }//Log In Action ends here
     
 
@@ -102,7 +87,7 @@ class LoginController: UIViewController {
     
     
     override func viewWillAppear(_ animated: Bool) {
-        self.loginLogo.image = UIImage(named: "bugle2")
+     self.loginLogo.image = UIImage(named: "bugle2")
         self.loginLogo.layer.cornerRadius = self.loginLogo.frame.size.width / 2
         self.loginLogo.clipsToBounds = true
     }
@@ -141,9 +126,28 @@ class LoginController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         passwordTxtField.isSecureTextEntry = true
+        self.passwordTxtField.delegate = self
+        self.userNameTxtField.delegate = self
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        self.setupToHideKeyboardOnTapOnView()
+
     }
 
-    
+ 
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= keyboardSize.height/2
+            }
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
+    }
     
     func animateMovement(myCircle: CAShapeLayer, myPath: UIBezierPath, myPostion1: CGPoint, myPostion2: CGPoint, myColor: UIColor, myOpacity: Double, myTransformation: Double, myTime: Double)
     {
@@ -177,7 +181,5 @@ class LoginController: UIViewController {
         animation2.repeatCount = .greatestFiniteMagnitude
         myCircle.add(animation2, forKey: nil)
     }
-  
-
 }
 

@@ -29,7 +29,9 @@
                         <constraint firstAttribute="height" constant="30" id="4gT-B7-ak4"/>
                     </constraints>
                     <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" image="xmark.circle" catalog="system"/>
+                    <buttonConfiguration key="configuration" style="plain" image="xmark" catalog="system">
+                        <color key="baseForegroundColor" systemColor="systemPurpleColor"/>
+                    </buttonConfiguration>
                     <connections>
                         <action selector="closeAction:" destination="-1" eventType="touchUpInside" id="kPQ-LK-usQ"/>
                     </connections>
@@ -51,12 +53,15 @@
         </view>
     </objects>
     <resources>
-        <image name="xmark.circle" catalog="system" width="128" height="123"/>
+        <image name="xmark" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray2Color">
             <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemPurpleColor">
+            <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

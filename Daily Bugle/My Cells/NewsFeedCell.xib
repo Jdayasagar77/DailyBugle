@@ -29,6 +29,9 @@
                         </constraints>
                         <state key="normal" title="Button"/>
                         <buttonConfiguration key="configuration" style="plain" image="bookmark" catalog="system"/>
+                        <connections>
+                            <action selector="saveAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="DCi-Ja-ybd"/>
+                        </connections>
                     </button>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JHW-1d-du7">
                         <rect key="frame" x="25" y="45.333333333333343" width="450" height="125"/>

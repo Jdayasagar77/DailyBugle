@@ -8,13 +8,13 @@
 import Foundation
 import UIKit
 
-class UserModel {
-    var userId: Int?
+class UserModel: Codable {
+    
     var profilePic: String?
     var image: UIImage?
     var name: String?
     var email: String?
-    var mobile: String?
+    var mobileNumber: String?
     var address: String?
     var state: String?
     var pincode: String?
@@ -25,7 +25,18 @@ class UserModel {
 
     ){}
 
-
+    enum CodingKeys: String, CodingKey {
+        
+        case profilePic = "profilePic"
+        case name = "name"
+        case email = "email"
+        case mobileNumber = "mobileNumber"
+        case address = "address"
+        case state = "state"
+        case password = "password"
+        case pincode = "pincode"
+        
+    }
 
     
 }

@@ -11,7 +11,6 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class SignUpVC: UIViewController {
-    let databaseInstance = DBManager.sharedInstance
     let dataArray = [["ProfilePic", "Name", "Email Id", "Mobile Number", "Password", "Confirm Password"], ["Address", "State", "Pincode", "Submit"]]
     let myIndexPath = [[0,1,2,3,4,5],[6,7,8,9]]
     var myImage: UIImage?
@@ -30,23 +29,35 @@ class SignUpVC: UIViewController {
         
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
-        signUpTableView.register(UINib(nibName: "ProfilePicCell", bundle: nil), forCellReuseIdentifier: "ProfilePicCell") 
-        signUpTableView.register(UINib(nibName: "SubmitButtonCell", bundle: nil), forCellReuseIdentifier: "SubmitButtonCell")
-        signUpTableView.register(UINib(nibName: "InputCell", bundle: nil), forCellReuseIdentifier: "InputCell")
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:UIResponder.keyboardWillShowNotification, object: nil);
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:UIResponder.keyboardWillShowNotification, object: nil);
-        signUpTableView.dataSource = self
-        signUpTableView.estimatedRowHeight = 300
+        
+     
+        self.signUpTableView.register(UINib(nibName: "ProfilePicCell", bundle: nil), forCellReuseIdentifier: "ProfilePicCell")
+        self.signUpTableView.register(UINib(nibName: "SubmitButtonCell", bundle: nil), forCellReuseIdentifier: "SubmitButtonCell")
+        self.signUpTableView.register(UINib(nibName: "InputCell", bundle: nil), forCellReuseIdentifier: "InputCell")
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+          NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        self.signUpTableView.dataSource = self
+        self.signUpTableView.estimatedRowHeight = 300
         // Do any additional setup after loading the view.
+        
+        self.setupToHideKeyboardOnTapOnView()
+        self.signUpTableView.autoresizingMask = UIView.AutoresizingMask.flexibleHeight
+        self.signUpTableView.isScrollEnabled = true
     }
     
-    @objc func keyboardWillShow() {
-         self.view.frame.origin.y = -150 // Move view 150 points upward
-    }
+       @objc func keyboardWillShow(notification: NSNotification) {
+           if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+               if self.view.frame.origin.y == 0 {
+                   self.view.frame.origin.y -= keyboardSize.height
+               }
+           }
+       }
 
-    @objc func keyboardWillHide() {
-         self.view.frame.origin.y = 0 // Move view to original position
-    }
+       @objc func keyboardWillHide(notification: NSNotification) {
+           if self.view.frame.origin.y != 0 {
+               self.view.frame.origin.y = 0
+           }
+       }
     /// Image Picker open
     func selectImage() {
         let imagePicker = UIImagePickerController()
@@ -61,6 +72,7 @@ class SignUpVC: UIViewController {
 
 
 extension SignUpVC: UITableViewDataSource, UITableViewDelegate {
+   
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.dataArray.count
@@ -69,10 +81,9 @@ extension SignUpVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dataArray[section].count
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        
+       
         if indexPath.section == 0, indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfilePicCell") as? ProfilePicCell
             cell?.handler = {
@@ -95,7 +106,7 @@ extension SignUpVC: UITableViewDataSource, UITableViewDelegate {
                     self.showMessage(title: "Please Enter a Valid Mail")
                     debugPrint("User Submitted and Didn't Entered Email")
                 }
-                else if ((self.user.mobile?.isEmpty)
+                else if ((self.user.mobileNumber?.isEmpty)
                          == nil){
                     self.showMessage(title: "Please Enter a Valid Phone Number")
                     debugPrint("User Submitted and Didn't Entered Phone Number")
@@ -124,21 +135,16 @@ extension SignUpVC: UITableViewDataSource, UITableViewDelegate {
                     debugPrint("User Submitted and Entered Wrong Password")
                 }
                 else {
-                    self.dismiss(animated: true)
-                    if let _ = DBManager.sharedInstance.getUserDetail(email: self.user.email ?? ""){
-                        self.showMessage(title: "Email Id Exist")
-                        return
-        }
-            else{
+                    
+                self.dismiss(animated: true)
                 self.authenticate.createUser(withEmail: self.user.email ?? "", password: self.user.password ?? "") {
                     authResult, error in
                     debugPrint("\(String(describing: authResult?.user.uid))")
-                    self.databaseInstance.insert(user: self.user)
                     debugPrint("Inserted \(self.user.email as Any) in Database")
-                    self.db.collection("Users").document("\(String(describing: authResult?.user.uid))").setData([
+                    self.db.collection("Users").document("\(String(describing: authResult?.user.email))").setData([
                 "name": "\(String(describing: self.user.name))",
                 "email": "\(String(describing: self.user.email))",
-                "mobileNumber":"\(String(describing: self.user.mobile))",
+                "mobileNumber":"\(String(describing: self.user.mobileNumber))",
                 "password":"\(String(describing: self.user.password))",
                 "address":"\(String(describing: self.user.address))",
                 "state":"\(String(describing: self.user.state))",
@@ -146,7 +152,7 @@ extension SignUpVC: UITableViewDataSource, UITableViewDelegate {
                 "profilePic" : "\(String(describing: self.user.profilePic))"
                         ])
                     }
-                }
+                
             }
         }
             cell?.SubmitButtonCell.setTitle("Submit", for: .normal)
@@ -155,6 +161,7 @@ extension SignUpVC: UITableViewDataSource, UITableViewDelegate {
         }
        
         else {
+            
             let cell = tableView.dequeueReusableCell(withIdentifier: "InputCell") as? InputCell
             cell?.inputText.placeholder =  dataArray[indexPath.section][indexPath.row]
             cell?.inputText.tag = myIndexPath[indexPath.section][indexPath.row]
@@ -174,6 +181,8 @@ extension SignUpVC: UITableViewDataSource, UITableViewDelegate {
     }
     
 }
+
+
 extension SignUpVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info:
@@ -198,6 +207,17 @@ extension SignUpVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
 extension SignUpVC: UITextFieldDelegate {
  
         
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        switch textField.tag {
+        case TextFieldData.passwordTextField.rawValue:
+     textField.isSecureTextEntry = true
+        case TextFieldData.repeatPasswordTextField.rawValue:
+     textField.isSecureTextEntry = true
+        default :
+            break
+        }
+    }
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
         
         switch textField.tag {
@@ -212,10 +232,9 @@ extension SignUpVC: UITextFieldDelegate {
                 debugPrint("User Entered Invalid Mail")
             }
                case TextFieldData.phoneTextField.rawValue:
-            self.user.mobile = textField.text
+            self.user.mobileNumber = textField.text
                    
                case TextFieldData.passwordTextField.rawValue:
-            textField.isSecureTextEntry = true
             if textField.text?.utf8CString.count ?? 0 >= 5 {
                 self.user.password = textField.text
             } else{
@@ -223,7 +242,6 @@ extension SignUpVC: UITextFieldDelegate {
                 debugPrint("User Entered Less Number of Characters in Password")
             }
                case TextFieldData.repeatPasswordTextField.rawValue:
-            textField.isSecureTextEntry = true
             if textField.text == user.password {
                 self.user.confirmPassword = textField.text
             }
@@ -270,11 +288,24 @@ extension SignUpVC: UITextFieldDelegate {
     }
     
     
+    /**
+      * Called when 'return' key pressed. return NO to ignore.
+      */
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
+         textField.resignFirstResponder()
+         return true
+     }
 
-    }
+
+    /**
+     * Called when the user click on the view (outside the UITextField).
+     */
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//    //    self.view.endEditing(true)
+//        self.signUpTableView.endEditing(true)
+//    }
+    
+//    Use the Extension Method
 }
 
 
@@ -288,4 +319,5 @@ enum TextFieldData: Int {
     case address = 6
     case state = 7
     case pincode = 8
+    
 }

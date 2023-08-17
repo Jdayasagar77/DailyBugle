@@ -17,10 +17,11 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="shE-JW-yt5">
-                        <rect key="frame" x="74" y="210" width="172" height="35"/>
+                        <rect key="frame" x="70" y="210" width="180" height="35"/>
                         <color key="backgroundColor" red="0.71791988610000002" green="0.67204844949999998" blue="0.83139222859999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="35" id="ItL-Ne-b6v"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="rWj-U0-Jcg"/>
                         </constraints>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <state key="normal" title="Button"/>
@@ -36,27 +37,27 @@
                             <action selector="selectProfilePicAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="LYe-EA-JYJ"/>
                         </connections>
                     </button>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="4QB-oe-TaU">
-                        <rect key="frame" x="70" y="22.5" width="180" height="176.5"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="9dv-oo-5lo">
+                        <rect key="frame" x="70" y="21.5" width="180" height="177.5"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="179" id="0VJ-eI-EE0"/>
+                            <constraint firstAttribute="width" constant="180" id="8j2-G7-yGc"/>
+                            <constraint firstAttribute="height" constant="180" id="wZm-CE-Qp0"/>
                         </constraints>
                     </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="shE-JW-yt5" secondAttribute="bottom" constant="10" id="EkB-Cc-x3n"/>
-                    <constraint firstAttribute="trailing" secondItem="shE-JW-yt5" secondAttribute="trailing" constant="74" id="PrT-Zr-ai5"/>
-                    <constraint firstAttribute="trailing" secondItem="4QB-oe-TaU" secondAttribute="trailing" constant="70" id="Rtl-aw-mkH"/>
-                    <constraint firstItem="4QB-oe-TaU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" id="bjc-Dc-7wX"/>
-                    <constraint firstItem="shE-JW-yt5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="74" id="fhq-tD-gwe"/>
-                    <constraint firstItem="4QB-oe-TaU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="70" id="g7R-E8-6IF"/>
-                    <constraint firstItem="shE-JW-yt5" firstAttribute="top" secondItem="4QB-oe-TaU" secondAttribute="bottom" constant="10" id="kVt-fo-RXI"/>
+                    <constraint firstItem="9dv-oo-5lo" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="3nV-Fr-cNM"/>
+                    <constraint firstItem="shE-JW-yt5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="70" id="Nf6-sR-g4F"/>
+                    <constraint firstItem="9dv-oo-5lo" firstAttribute="centerX" secondItem="shE-JW-yt5" secondAttribute="centerX" id="fmQ-Cl-Xid"/>
+                    <constraint firstItem="shE-JW-yt5" firstAttribute="top" secondItem="9dv-oo-5lo" secondAttribute="bottom" constant="10" id="m1y-9X-whW"/>
+                    <constraint firstAttribute="trailing" secondItem="shE-JW-yt5" secondAttribute="trailing" constant="70" id="qeY-Jh-kye"/>
+                    <constraint firstAttribute="bottom" secondItem="shE-JW-yt5" secondAttribute="bottom" constant="10" id="xua-BJ-8LS"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="btnSelectImage" destination="shE-JW-yt5" id="F6i-sz-wWD"/>
-                <outlet property="imgProfile" destination="4QB-oe-TaU" id="oak-Vw-JRM"/>
+                <outlet property="imgProfile" destination="9dv-oo-5lo" id="Qmy-wA-9ot"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="133.59375"/>
         </tableViewCell>

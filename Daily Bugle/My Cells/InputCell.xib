@@ -4,7 +4,6 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -22,25 +21,12 @@
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <textInputTraits key="textInputTraits"/>
                     </textField>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dgb-Op-pql">
-                        <rect key="frame" x="15" y="146" width="290" height="1"/>
-                        <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="1" id="vPd-6t-kpU"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="3Jl-O2-Mdn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="0qT-QR-INf"/>
-                    <constraint firstAttribute="trailing" secondItem="Dgb-Op-pql" secondAttribute="trailing" constant="15" id="MGI-Ql-tXa"/>
                     <constraint firstItem="3Jl-O2-Mdn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="RMn-MU-X3K"/>
-                    <constraint firstItem="Dgb-Op-pql" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="phY-uo-xix"/>
                     <constraint firstAttribute="bottom" secondItem="3Jl-O2-Mdn" secondAttribute="bottom" constant="10" id="ujn-Ek-LL8"/>
                     <constraint firstAttribute="trailing" secondItem="3Jl-O2-Mdn" secondAttribute="trailing" constant="20" id="vE7-LW-Z8k"/>
-                    <constraint firstItem="Dgb-Op-pql" firstAttribute="top" secondItem="3Jl-O2-Mdn" secondAttribute="bottom" id="xhy-3k-uQz"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -50,9 +36,4 @@
             <point key="canvasLocation" x="279.71014492753625" y="62.946428571428569"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <systemColor name="opaqueSeparatorColor">
-            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-    </resources>
 </document>

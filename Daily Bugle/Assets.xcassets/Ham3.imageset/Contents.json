@@ -1,0 +1,21 @@
+{
+  "images" : [
+    {
+      "filename" : "music-brand-showing-stage-concert-live-defocused-entertainment-lighting-laser-rays-beams-party-concept-156853789.jpg",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

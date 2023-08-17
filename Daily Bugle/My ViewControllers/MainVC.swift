@@ -9,61 +9,49 @@ import UIKit
 
 class MainVC: UIViewController {
     
+    var isLoading: Bool = true
+    var currentUser: UserModel?
+    var errorMessage: String? = nil
+    var myArticles: [Article]?
+    let newsConnection = NewsAPIBackend.shared
     @IBOutlet weak var mainTable: UITableView!
-    private var hamburgerVC = HamburgerVC(nibName: "HamburgerVC", bundle: nil)
-    private var sideMenuShadowView: UIView!
-    private var draggingIsEnabled: Bool = false
-    private var panBaseLocation: CGFloat = 0.0
-    private var sideMenuRevealWidth: CGFloat = 260
-    private let paddingForRotation: CGFloat = 150
-    private var isExpanded: Bool = false
-    private var sideMenuTrailingConstraint: NSLayoutConstraint!
-    private var revealSideMenuOnTop: Bool = true
-    var gestureEnabled: Bool = true
-//    var logVC = LoginController.init(nibName: "LoginController", bundle: nil)
-//    var articleHandler: (()->())?
-    var myArticles : NewsAPI?
-
-    @IBOutlet var sideMenuBtn: UIBarButtonItem!
+    @IBOutlet var hamburgerBtn: UIBarButtonItem!
+    var hamburgerViewController = HamburgerVC.init(nibName: "HamburgerVC", bundle: nil)
+     var hamburgerWidth: CGFloat = 260
+     let paddingForRotation: CGFloat = 150
+    var isExpanded: Bool = false
+    // Expand/Collapse the side menu by changing trailing's constant
+     var hamMenuTrailingConstraint: NSLayoutConstraint!
+     var revealHamMenuOnTop: Bool = true
+     var hamMenuShadowView: UIView!
+     var draggingIsEnabled: Bool = false
+     var panBaseLocation: CGFloat = 0.0
+   
+    
     @IBAction open func revealSideMenu() {
         self.sideMenuState(expanded: self.isExpanded ? false : true)
     }
     
-   
-    
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
-        self.revealViewController()?.gestureEnabled = true
-      
-        let apiUrl = "https://newsapi.org/v2/top-headlines?country=in&apiKey=c554d5e111b044049820eaca8a680944"
-        guard let apiurl = URL.init(string: apiUrl) else {return}
-     let task =  URLSession.shared.dataTask(with: apiurl) { data, response, error in
-            if let error = error{
-                debugPrint(error.localizedDescription)
-                return
-            }
-            if let data = data{
-                debugPrint("News Has Been Fetched")
-                do{
-                    let jsonData = try JSONDecoder().decode(NewsAPI.self, from: data)
-                 //   debugPrint(jsonData.articles as Any)
-                    self.myArticles = jsonData
-                } catch{
-                    debugPrint(error.localizedDescription)
+        newsConnection.fetchNews(category: Category.science) { [unowned self] result in
+            DispatchQueue.main.async {
+                self.isLoading = false
+                switch result {
+                case .failure(let error):
+                    self.errorMessage = error.localizedDescription
+                    // print(error.description)
+                    print(error)
+                case .success(let news):
+                    print("--- success with \(news.count)")
+                    self.myArticles = news
+                    self.mainTable.reloadData()
                 }
-    }
-
-    }
-        task.resume()
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        self.mainTable.reloadData()
-    }
-    override func viewWillDisappear(_ animated: Bool) {
-            super.viewWillDisappear(animated)
-            self.revealViewController()?.gestureEnabled = true
+            }
         }
+    }
+   
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -72,351 +60,178 @@ class MainVC: UIViewController {
         self.mainTable.delegate = self
         self.mainTable.dataSource = self
         self.mainTable.estimatedRowHeight = 300
-        
+                self.hamburgerViewController.defaultHighlightedCell = 0 // Default Highlighted Cell
+                self.hamburgerViewController.hamDelegate = self
+                view.insertSubview(self.hamburgerViewController.view, at: self.revealHamMenuOnTop ? 2 : 0)
+                addChild(self.hamburgerViewController)
+                self.hamburgerViewController.didMove(toParent: self)
+                // Side Menu AutoLayout
+                self.hamburgerViewController.view.translatesAutoresizingMaskIntoConstraints = false
 
-
-
-             let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture))
-             panGestureRecognizer.delegate = self
-             view.addGestureRecognizer(panGestureRecognizer)
-                self.sideMenuShadowView = UIView(frame: self.view.bounds)
-              self.sideMenuShadowView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-              self.sideMenuShadowView.backgroundColor = .black
-              self.sideMenuShadowView.alpha = 0.0
-              let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(TapGestureRecognizer))
-              tapGestureRecognizer.numberOfTapsRequired = 1
-              tapGestureRecognizer.delegate = self
-              self.sideMenuShadowView.addGestureRecognizer(tapGestureRecognizer)
-        
-              if self.revealSideMenuOnTop {
-                  view.insertSubview(self.sideMenuShadowView, at: 1)
-              }
-        self.view.backgroundColor = #colorLiteral(red: 0.737254902, green: 0.1294117647, blue: 0.2941176471, alpha: 1)
-        sideMenuBtn.target = revealViewController()
-        sideMenuBtn.action = #selector(self.revealViewController()?.revealSideMenu)
-        self.hamburgerVC.defaultHighlightedCell = 0 // Default Highlighted Cell
-        self.hamburgerVC.delegate = self
-        view.insertSubview(self.hamburgerVC.view, at: self.revealSideMenuOnTop ? 2 : 0)
-        addChild(self.hamburgerVC)
-        self.hamburgerVC.didMove(toParent: self)
-        
-        // Side Menu AutoLayout
-        
-        self.hamburgerVC.view.translatesAutoresizingMaskIntoConstraints = false
-        
-        if self.revealSideMenuOnTop {
-            self.sideMenuTrailingConstraint = self.hamburgerVC.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -self.sideMenuRevealWidth - self.paddingForRotation)
-            self.sideMenuTrailingConstraint.isActive = true
-        }
-        
-        NSLayoutConstraint.activate([
-            self.hamburgerVC.view.widthAnchor.constraint(equalToConstant: self.sideMenuRevealWidth),
-            self.hamburgerVC.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            self.hamburgerVC.view.topAnchor.constraint(equalTo: view.topAnchor)
-        ])
-                
-    }
-    
-}
-
-
-
-
-
-
-
-
-
-extension MainVC: HamburgerVCDelegate, UIGestureRecognizerDelegate {
-    
-    @objc private func handlePanGesture(sender: UIPanGestureRecognizer) {
-          
-          guard gestureEnabled == true else { return }
-        let position: CGFloat = sender.translation(in: self.view).x
-        let velocity: CGFloat = sender.velocity(in: self.view).x
-
-          // ...
-
-          switch sender.state {
-          case .began:
-
-              // If the user tries to expand the menu more than the reveal width, then cancel the pan gesture
-              if velocity > 0, self.isExpanded {
-                  sender.state = .cancelled
-              }
-
-              // If the user swipes right but the side menu hasn't expanded yet, enable dragging
-              if velocity > 0, !self.isExpanded {
-                  self.draggingIsEnabled = true
-              }
-              // If user swipes left and the side menu is already expanded, enable dragging they collapsing the side menu)
-              else if velocity < 0, self.isExpanded {
-                  self.draggingIsEnabled = true
-              }
-
-              if self.draggingIsEnabled {
-                  // If swipe is fast, Expand/Collapse the side menu with animation instead of dragging
-                  let velocityThreshold: CGFloat = 550
-                  if abs(velocity) > velocityThreshold {
-                      self.sideMenuState(expanded: self.isExpanded ? false : true)
-                      self.draggingIsEnabled = false
-                      return
-                  }
-
-                  if self.revealSideMenuOnTop {
-                      self.panBaseLocation = 0.0
-                      if self.isExpanded {
-                          self.panBaseLocation = self.sideMenuRevealWidth
-                      }
-                  }
-              }
-
-          case .changed:
-
-              // Expand/Collapse side menu while dragging
-              if self.draggingIsEnabled {
-                  if self.revealSideMenuOnTop {
-                      // Show/Hide shadow background view while dragging
-                      let xLocation: CGFloat = self.panBaseLocation + position
-                      let percentage = (xLocation * 150 / self.sideMenuRevealWidth) / self.sideMenuRevealWidth
-
-                      let alpha = percentage >= 0.6 ? 0.6 : percentage
-                      self.sideMenuShadowView.alpha = alpha
-
-                      // Move side menu while dragging
-                      if xLocation <= self.sideMenuRevealWidth {
-                          self.sideMenuTrailingConstraint.constant = xLocation - self.sideMenuRevealWidth
-                      }
-                  }
-                  else {
-                      if let recogView = sender.view?.subviews[1] {
-                         // Show/Hide shadow background view while dragging
-                          let percentage = (recogView.frame.origin.x * 150 / self.sideMenuRevealWidth) / self.sideMenuRevealWidth
-
-                          let alpha = percentage >= 0.6 ? 0.6 : percentage
-                          self.sideMenuShadowView.alpha = alpha
-
-                          // Move side menu while dragging
-                          if recogView.frame.origin.x <= self.sideMenuRevealWidth, recogView.frame.origin.x >= 0 {
-                              recogView.frame.origin.x = recogView.frame.origin.x + position
-                              sender.setTranslation(CGPoint.zero, in: view)
-                          }
-                      }
-                  }
-              }
-          case .ended:
-              self.draggingIsEnabled = false
-              // If the side menu is half Open/Close, then Expand/Collapse with animationse with animation
-              if self.revealSideMenuOnTop {
-                  let movedMoreThanHalf = self.sideMenuTrailingConstraint.constant > -(self.sideMenuRevealWidth * 0.5)
-                  self.sideMenuState(expanded: movedMoreThanHalf)
-              }
-              else {
-                  if let recogView = sender.view?.subviews[1] {
-                      let movedMoreThanHalf = recogView.frame.origin.x > self.sideMenuRevealWidth * 0.5
-                      self.sideMenuState(expanded: movedMoreThanHalf)
-                  }
-              }
-          default:
-              break
-          }
-      }
-
-    
-    @objc func TapGestureRecognizer(sender: UITapGestureRecognizer) {
-            if sender.state == .ended {
-                if self.isExpanded {
-                    self.sideMenuState(expanded: false)
+                if self.revealHamMenuOnTop {
+                    self.hamMenuTrailingConstraint = self.hamburgerViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -self.hamburgerWidth - self.paddingForRotation)
+                    self.hamMenuTrailingConstraint.isActive = true
                 }
-            }
-        }
+                NSLayoutConstraint.activate([
+                    self.hamburgerViewController.view.widthAnchor.constraint(equalToConstant: self.hamburgerWidth),
+                    self.hamburgerViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+                    self.hamburgerViewController.view.topAnchor.constraint(equalTo: view.topAnchor)
+                ])
 
-        // Close side menu when you tap on the shadow background view
-        func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-            if (touch.view?.isDescendant(of: self.hamburgerVC.view))! {
-                return false
-            }
-            return true
-        }
-    
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        coordinator.animate { _ in
-            if self.revealSideMenuOnTop {
-                self.sideMenuTrailingConstraint.constant = self.isExpanded ? 0 : (-self.sideMenuRevealWidth - self.paddingForRotation)
-            }
-        }
-    }
-    
-    func selectedCell(_ row: Int) {
-        switch row {
-        case 0:
-            // Home
-            self.showViewController(viewController: UINavigationController.self, scene: LoginController(nibName: "LoginController", bundle: nil))
-        case 1:
-            // Music
-            self.showViewController(viewController: UINavigationController.self, scene: LoginController(nibName: "LoginController", bundle: nil))
-        case 2:
-            // Movies
-            self.showViewController(viewController: UINavigationController.self,  scene: LoginController(nibName: "LoginController", bundle: nil))
-        case 3:
-            // Books
-            self.showViewController(viewController: UINavigationController.self,  scene: LoginController(nibName: "LoginController", bundle: nil))
-        case 4:
-            // Profile
-           
-            present(LoginController(nibName: "LoginController", bundle: nil), animated: true, completion: nil)
-        case 5:
-            // Settings
-            present(LoginController(nibName: "LoginController", bundle: nil), animated: true, completion: nil)
-        case 6:
-            // Like us on facebook
-            present(LoginController(nibName: "LoginController", bundle: nil), animated: true, completion: nil)
-        default:
-            break
-        }
+        self.hamMenuShadowView = UIView(frame: self.view.bounds)
+               self.hamMenuShadowView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+               self.hamMenuShadowView.backgroundColor = .black
+               self.hamMenuShadowView.alpha = 0.0
+               let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(TapGestureRecognizer))
+               tapGestureRecognizer.numberOfTapsRequired = 1
+               tapGestureRecognizer.delegate = self
+               self.hamMenuShadowView.addGestureRecognizer(tapGestureRecognizer)
+               if self.revealHamMenuOnTop {
+                   view.insertSubview(self.hamMenuShadowView, at: 1)
+               }
 
-        // Collapse side menu with animation
-        DispatchQueue.main.async { self.sideMenuState(expanded: false) }
-    }
+        // Side Menu Gestures
+               let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture))
+               panGestureRecognizer.delegate = self
+               view.addGestureRecognizer(panGestureRecognizer)
+               
+               // Default Main View Controller
+//               showViewController(viewController: UINavigationController.self, storyboardId: "HomeNavID")
+        hamburgerBtn.target = revealViewController()
+        hamburgerBtn.action = #selector(revealViewController()?.revealSideMenu)
 
-    func showViewController<T: UIViewController>(viewController: T.Type, scene: UIViewController) -> () {
-        // Remove the previous View
-        for subview in view.subviews {
-            if subview.tag == 99 {
-                subview.removeFromSuperview()
-            }
-        }
-       
-        let vc = scene
-        vc.view.tag = 99
-        view.insertSubview(vc.view, at: self.revealSideMenuOnTop ? 0 : 1)
-        addChild(vc)
-        DispatchQueue.main.async {
-            vc.view.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                vc.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-                vc.view.topAnchor.constraint(equalTo: self.view.topAnchor),
-                vc.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-                vc.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
-            ])
-        }
-        if !self.revealSideMenuOnTop {
-            if isExpanded {
-                vc.view.frame.origin.x = self.sideMenuRevealWidth
-            }
-            if self.sideMenuShadowView != nil {
-                vc.view.addSubview(self.sideMenuShadowView)
-            }
-        }
-        vc.didMove(toParent: self)
-    }
-
-    func sideMenuState(expanded: Bool) {
-        if expanded {
-            self.animateSideMenu(targetPosition: self.revealSideMenuOnTop ? 0 : self.sideMenuRevealWidth) { _ in
-                self.isExpanded = true
-            }
-            // Animate Shadow (Fade In)
-            UIView.animate(withDuration: 0.5) {
-                self.sideMenuShadowView.alpha = 0.6
-                
-            }
-        }
-        else {
-            self.animateSideMenu(targetPosition: self.revealSideMenuOnTop ? (-self.sideMenuRevealWidth - self.paddingForRotation) : 0) { _ in
-                self.isExpanded = false
-            }
-            // Animate Shadow (Fade Out)
-            UIView.animate(withDuration: 0.5) {
-                self.sideMenuShadowView.alpha = 0.0
-            }
-        }
-    }
-
-    func animateSideMenu(targetPosition: CGFloat, completion: @escaping (Bool) -> ()) {
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: .layoutSubviews, animations: {
-            if self.revealSideMenuOnTop {
-                self.sideMenuTrailingConstraint.constant = targetPosition
-                self.view.layoutIfNeeded()
-            }
-            else {
-                self.view.subviews[1].frame.origin.x = targetPosition
-            }
-        }, completion: completion)
     }
 }
-
-
-
-
-extension UIViewController {
-    
-    // With this extension you can access the MainViewController from the child view controllers.
-    func revealViewController() -> MainVC? {
-        var viewController: UIViewController? = self
-        
-        if viewController != nil && viewController is MainVC {
-            return viewController! as? MainVC
-        }
-        while (!(viewController is MainVC) && viewController?.parent != nil) {
-            viewController = viewController?.parent
-        }
-        if viewController is MainVC {
-            return viewController as? MainVC
-        }
-        return nil
-    }
-    
-}
-
-
-
-//        let myButton = UIBarButtonItem(image: UIImage(named: "ham-icon"), style: .done, target: revealViewController(), action: #selector(revealViewController()?.revealSideMenu))
-//        // action:#selector(Class.MethodName) for swift 3
-//      self.navigationItem.leftBarButtonItem = myButton
-      //  self.navigationItem.title  = "Home"
-     //   self.navigationItem.rightBarButtonItem = myButton1
-        //self.navigationItem.leftBarButtonItem?.target = revealViewController()
-        //self.navigationItem.leftBarButtonItem?.action = #selector(revealViewController()?.revealSideMenu)
-
-
-
-
-
-
-
 
 
 
 
 
 extension MainVC : UITableViewDelegate,UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.myArticles != nil {
-            return self.myArticles?.articles?.count ?? 0
+            return self.myArticles?.count ?? 0
         }
         else {return 0}
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.mainTable.dequeueReusableCell(withIdentifier: "NewsFeedCell") as? NewsFeedCell
-        cell?.articleTitle.text = self.myArticles?.articles?[indexPath.row].title
-     //   cell?.articleImage.image =  self.myArticles?.articles?[indexPath.row].urlToImage
-        cell?.articleImage.image = self.myArticles?.articles?[indexPath.row].loadFrom()
-        cell?.articlePublished.text = self.myArticles?.articles?[indexPath.row].publishedAt
-        cell?.saveButton.tintColor = .black
+        cell?.articleTitle.text = self.myArticles?[indexPath.row].title
+        cell?.articlePublished.text =  self.myArticles?[indexPath.row].publishedAt ?? ""
+        if self.myArticles?[indexPath.row].urlToImage != nil {
+        cell?.articleImage.loadImageUsingCache(withUrl: (self.myArticles?[indexPath.row].urlToImage)!)
+        } else {
+            cell?.articleImage.image = UIImage(named: "Loading")
+        }
         if indexPath.row.isOdd {
             cell?.contentView.backgroundColor = .gray
             cell?.articleTitle.textColor = .white
             cell?.articlePublished.textColor = .white
             cell?.saveButton.tintColor = .white
         }
-        
+        cell?.handler =  {
+            
+        }
         return cell ?? UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
+    
+}
+
+
+extension MainVC : HamburgerVCDelegate {
+    
+    func selectedCell(_ row: Int) {
+            switch row {
+            case 0:
+                // Technology
+                self.showViewController(viewController: UINavigationController.self, nibName: "")
+            case 1:
+                // Business
+                self.showViewController(viewController: UINavigationController.self, nibName: "")
+            case 2:
+                // Entertainment
+                self.showViewController(viewController: UINavigationController.self, nibName: "")
+            case 3:
+                // Science
+                self.showViewController(viewController: UINavigationController.self, nibName: "")
+            case 4:
+                // Saved
+                self.showViewController(viewController: UINavigationController.self, nibName: "")
+        
+            default:
+                break
+            }
+
+            // Collapse side menu with animation
+            DispatchQueue.main.async { self.sideMenuState(expanded: false) }
+        }
+
+        func showViewController<T: UIViewController>(viewController: T.Type, nibName: String) -> () {
+            // Remove the previous View
+            for subview in view.subviews {
+                if subview.tag == 99 {
+                    subview.removeFromSuperview()
+                }
+            }
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            let vc = storyboard.instantiateViewController(withIdentifier: storyboardId) as! T
+            let vc = UIViewController(nibName: nibName, bundle: nil)
+            vc.view.tag = 99
+            view.insertSubview(vc.view, at: self.revealHamMenuOnTop ? 0 : 1)
+            addChild(vc)
+            DispatchQueue.main.async {
+                vc.view.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    vc.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+                    vc.view.topAnchor.constraint(equalTo: self.view.topAnchor),
+                    vc.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+                    vc.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+                ])
+            }
+            if !self.revealHamMenuOnTop {
+                if isExpanded {
+                    vc.view.frame.origin.x = self.hamburgerWidth
+                }
+                if self.hamMenuShadowView != nil {
+                    vc.view.addSubview(self.hamMenuShadowView)
+                }
+            }
+            vc.didMove(toParent: self)
+        }
+
+        func sideMenuState(expanded: Bool) {
+            if expanded {
+                self.animateSideMenu(targetPosition: self.revealHamMenuOnTop ? 0 : self.hamburgerWidth) { _ in
+                    self.isExpanded = true
+                }
+                // Animate Shadow (Fade In)
+                UIView.animate(withDuration: 0.5) { self.hamMenuShadowView.alpha = 0.6 }
+            }
+            else {
+                self.animateSideMenu(targetPosition: self.revealHamMenuOnTop ? (-self.hamburgerWidth - self.paddingForRotation) : 0) { _ in
+                    self.isExpanded = false
+                }
+                // Animate Shadow (Fade Out)
+                UIView.animate(withDuration: 0.5) { self.hamMenuShadowView.alpha = 0.0 }
+            }
+        }
+
+        func animateSideMenu(targetPosition: CGFloat, completion: @escaping (Bool) -> ()) {
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: .layoutSubviews, animations: {
+                if self.revealHamMenuOnTop {
+                    self.hamMenuTrailingConstraint.constant = targetPosition
+                    self.view.layoutIfNeeded()
+                }
+                else {
+                    self.view.subviews[1].frame.origin.x = targetPosition
+                }
+            }, completion: completion)
+        }
+    
 }

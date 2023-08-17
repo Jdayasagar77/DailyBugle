@@ -32,6 +32,7 @@ class ProfilePicCell: UITableViewCell {
             return
         }
         self.imgProfile.image = img
+        self.imgProfile.maskCircle(anyImage: img)
     }
         override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

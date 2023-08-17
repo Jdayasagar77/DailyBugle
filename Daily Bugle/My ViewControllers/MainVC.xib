@@ -10,8 +10,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainVC" customModule="Daily_Bugle" customModuleProvider="target">
             <connections>
+                <outlet property="hamburgerBtn" destination="npM-Rx-Mef" id="gah-0l-ZDC"/>
                 <outlet property="mainTable" destination="bih-UV-bGq" id="Flw-gh-KIM"/>
-                <outlet property="sideMenuBtn" destination="npM-Rx-Mef" id="DTi-RH-4mb"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -24,11 +24,7 @@
                     <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                     <items>
                         <navigationItem title="Home" id="Ft2-fH-4gm">
-                            <barButtonItem key="leftBarButtonItem" image="hamburger" id="npM-Rx-Mef">
-                                <connections>
-                                    <action selector="revealSideMenu" destination="-1" id="ag8-k1-JKR"/>
-                                </connections>
-                            </barButtonItem>
+                            <barButtonItem key="leftBarButtonItem" image="hamburger" id="npM-Rx-Mef"/>
                         </navigationItem>
                     </items>
                 </navigationBar>
