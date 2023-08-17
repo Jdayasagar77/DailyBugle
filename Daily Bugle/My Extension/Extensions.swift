@@ -22,6 +22,7 @@ extension UIImageView {
 }
 
 extension UIViewController {
+   
     
     // With this extension you can access the MainViewController from the child view controllers.
     func revealViewController() -> MainVC? {
@@ -238,6 +239,7 @@ extension Int {
 let imageCache = NSCache<NSString, AnyObject>()
 
 extension UIImageView {
+    
     func loadImageUsingCache(withUrl urlString : String) {
         let url = URL(string: urlString)
         self.image = nil

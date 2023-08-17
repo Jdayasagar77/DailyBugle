@@ -37,7 +37,9 @@ class LoginController: UIViewController {
             Auth.auth().signIn(withEmail: userNameTxtField.text!, password: passwordTxtField.text!) { [weak self] authResult, error in
             guard let strongSelf = self else { return }
                 if let user = authResult?.user {
+                    
                     strongSelf.dismiss(animated: true)
+                    Utility.shared.setDataWhenUserLogin(userEmail: user.email ?? "")
                     self?.userMailDelegate?.activeUser(user.email!)
                     debugPrint("User \(user.email as Any) Has Logged In from Firebase")
                                                let myVC = MainVC.init(nibName: "MainVC", bundle: nil)

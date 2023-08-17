@@ -18,11 +18,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let myScene = (scene as? UIWindowScene) else { return }
         let myWindow = UIWindow.init(windowScene: myScene)
-        let myVC = LoginController.init(nibName: "LoginController", bundle: nil)
-        let myNav = UINavigationController.init(rootViewController: myVC)
-        myWindow.rootViewController = myNav
-        self.window = myWindow
-        window?.makeKeyAndVisible()
+        
+        if Utility.shared.isUserLogin() {
+            let myVC = MainVC.init(nibName: "MainVC", bundle: nil)
+            let myNav = UINavigationController.init(rootViewController: myVC)
+            myWindow.rootViewController = myNav
+            self.window = myWindow
+            window?.makeKeyAndVisible()
+        } else{
+            let myVC = LoginController.init(nibName: "LoginController", bundle: nil)
+            let myNav = UINavigationController.init(rootViewController: myVC)
+            myWindow.rootViewController = myNav
+            self.window = myWindow
+            window?.makeKeyAndVisible()
+        }
+        
         
     }
 
