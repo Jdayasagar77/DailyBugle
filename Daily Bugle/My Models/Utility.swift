@@ -7,10 +7,12 @@
 
 import Foundation
 
+
 struct DefaultKeys {
     static let isUserLogin = "IsUserLogin"
     static let emailId = "emailId"
 }
+
 
 class Utility: NSObject {
     
