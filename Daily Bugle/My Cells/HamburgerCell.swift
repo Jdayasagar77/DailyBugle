@@ -23,6 +23,7 @@ class HamburgerCell: UITableViewCell {
         // Icon
         self.iconImageView.tintColor = .white
         
+        
         // Title
         self.titleLabel.textColor = .white
     }

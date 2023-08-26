@@ -48,7 +48,7 @@ class HamburgerVC: UIViewController {
 
                // Update TableView with the data
                 self.hamTableView.reloadData()
-                self.hamTableView.estimatedRowHeight = 100
+                self.hamTableView.estimatedRowHeight = 300
 
     }
 

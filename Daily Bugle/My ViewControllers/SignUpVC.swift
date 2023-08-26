@@ -139,18 +139,20 @@ extension SignUpVC: UITableViewDataSource, UITableViewDelegate {
                 self.dismiss(animated: true)
                 self.authenticate.createUser(withEmail: self.user.email ?? "", password: self.user.password ?? "") {
                     authResult, error in
-                    debugPrint("\(String(describing: authResult?.user.uid))")
-                    debugPrint("Inserted \(self.user.email as Any) in Database")
-                    self.db.collection("Users").document("\(String(describing: authResult?.user.email))").setData([
-                "name": "\(String(describing: self.user.name))",
-                "email": "\(String(describing: self.user.email))",
-                "mobileNumber":"\(String(describing: self.user.mobileNumber))",
-                "password":"\(String(describing: self.user.password))",
-                "address":"\(String(describing: self.user.address))",
-                "state":"\(String(describing: self.user.state))",
-                "pincode":"\(String(describing: self.user.pincode))",
-                "profilePic" : "\(String(describing: self.user.profilePic))"
+                    guard let authResult = authResult else {return}
+                    debugPrint("\(String(describing: authResult.user.uid))")
+                    self.db.collection("Users").document("\(String(describing: authResult.user.uid))").setData([
+                "name": "\(String(describing: self.user.name!))",
+                "email": "\(String(describing: self.user.email!))",
+                "mobileNumber":"\(String(describing: self.user.mobileNumber!))",
+                "password":"\(String(describing: self.user.password!))",
+                "address":"\(String(describing: self.user.address!))",
+                "state":"\(String(describing: self.user.state!))",
+                "pincode":"\(String(describing: self.user.pincode!))",
+                "profilePic" : "\(String(describing: self.user.profilePic!))"
                         ])
+                    print(error as Any)
+
                     }
                 
             }
@@ -191,7 +193,12 @@ extension SignUpVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
                 as? UIImage {
               myImage = theImage
               user.image = theImage
+              user.profilePic =  theImage.jpegData(compressionQuality: 0.2)?.base64EncodedString()
+
+             
+
           }
+     
         self.signUpTableView.reloadData()
         dismiss(animated: true, completion: nil)
     }

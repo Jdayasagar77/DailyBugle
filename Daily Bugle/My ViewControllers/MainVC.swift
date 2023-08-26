@@ -9,11 +9,11 @@ import UIKit
 
 class MainVC: UIViewController {
     
+    var user: UserModel?
     let myHamVC = HamburgerVC.init(nibName: "HamburgerVC", bundle: nil)
     var myCategory: Category?
     {
         didSet{
-          //  UserDefaults.standard.setValue(myCategory, forKey: "category")
             print(self.myCategory?.rawValue as Any)
             self.viewDidLoad()
         }
@@ -35,7 +35,6 @@ class MainVC: UIViewController {
     @IBAction func hamBurgerBtnAction(_ sender: UIBarButtonItem) {
         myHamVC.newsDelegate = self
         navigationController?.pushViewController(myHamVC, animated: true)
-        //present(myHamVC, animated: true)
     }
     
   

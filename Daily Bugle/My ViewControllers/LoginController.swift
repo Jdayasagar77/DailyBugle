@@ -38,13 +38,31 @@ class LoginController: UIViewController {
                 if let user = authResult?.user {
                     
                     strongSelf.dismiss(animated: true)
-                    Utility.shared.setDataWhenUserLogin(userEmail: user.email ?? "")
-                    debugPrint("User \(user.email as Any) Has Logged In from Firebase")
+                  //  Utility.shared.setDataWhenUserLogin(userEmail: user.email ?? "")
+                    debugPrint("User \(user.uid as Any) Has Logged In from Firebase")
                                                let myVC = MainVC.init(nibName: "MainVC", bundle: nil)
+                    
                                                let myNav = UINavigationController.init(rootViewController: myVC)
                                                myNav.modalTransitionStyle = .crossDissolve
                                                myNav.modalPresentationStyle = .fullScreen
+                    let db = Firestore.firestore()
+                    db.collection("Users").document(user.uid).getDocument {
+                       doc, error in
+                        if let document = doc, document.exists {
+
+                            let dataDescription = document.data()?.values
+
+                            print("Document data: \(String(describing: dataDescription))")
+                        } else {
+                            print("Document does not exist")
+                            print(error as Any)
+                        }
+                        
+                    }
+                    
+                    
                     strongSelf.present(myNav, animated: true)
+                    
                 }
                 else
                 {
@@ -128,8 +146,8 @@ class LoginController: UIViewController {
         passwordTxtField.isSecureTextEntry = true
         self.passwordTxtField.delegate = self
         self.userNameTxtField.delegate = self
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         self.setupToHideKeyboardOnTapOnView()
 
     }
