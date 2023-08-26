@@ -18,7 +18,6 @@ class LoginController: UIViewController {
     @IBOutlet weak var userNameTxtField: UITextField!
     @IBOutlet weak var passwordTxtField: UITextField!
     @IBOutlet weak var logInButton: UIButton!
-    var userMailDelegate: CurrentUser?
     @IBAction func logInAction(_ sender: UIButton)
     {
         if ((userNameTxtField.text?.isEmpty) == nil || userNameTxtField.text?.isValidEmail() == false)
@@ -40,7 +39,6 @@ class LoginController: UIViewController {
                     
                     strongSelf.dismiss(animated: true)
                     Utility.shared.setDataWhenUserLogin(userEmail: user.email ?? "")
-                    self?.userMailDelegate?.activeUser(user.email!)
                     debugPrint("User \(user.email as Any) Has Logged In from Firebase")
                                                let myVC = MainVC.init(nibName: "MainVC", bundle: nil)
                                                let myNav = UINavigationController.init(rootViewController: myVC)

@@ -14,17 +14,6 @@
 		53033320293B54BA004E6BD3 /* MainVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5303331E293B54BA004E6BD3 /* MainVC.xib */; };
 		53033325293B552B004E6BD3 /* HamburgerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53033323293B552B004E6BD3 /* HamburgerCell.swift */; };
 		53033326293B552B004E6BD3 /* HamburgerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53033324293B552B004E6BD3 /* HamburgerCell.xib */; };
-		5303477929E5774600FB9E02 /* ScienceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5303477729E5774600FB9E02 /* ScienceVC.swift */; };
-		5303477A29E5774600FB9E02 /* ScienceVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5303477829E5774600FB9E02 /* ScienceVC.xib */; };
-		5303477D29E5776B00FB9E02 /* TechnologyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5303477B29E5776B00FB9E02 /* TechnologyVC.swift */; };
-		5303477E29E5776B00FB9E02 /* TechnologyVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5303477C29E5776B00FB9E02 /* TechnologyVC.xib */; };
-		5303478029E5777C00FB9E02 /* HealthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5303477F29E5777C00FB9E02 /* HealthVC.swift */; };
-		5303478329E5779300FB9E02 /* EntertainmentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5303478129E5779300FB9E02 /* EntertainmentVC.swift */; };
-		5303478429E5779300FB9E02 /* EntertainmentVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5303478229E5779300FB9E02 /* EntertainmentVC.xib */; };
-		5303478729E577C700FB9E02 /* BusinessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5303478529E577C700FB9E02 /* BusinessVC.swift */; };
-		5303478829E577C700FB9E02 /* BusinessVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5303478629E577C700FB9E02 /* BusinessVC.xib */; };
-		5303478B29E577D500FB9E02 /* SportsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5303478929E577D500FB9E02 /* SportsVC.swift */; };
-		5303478C29E577D500FB9E02 /* SportsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5303478A29E577D500FB9E02 /* SportsVC.xib */; };
 		534929B5296A006700DDC934 /* NewsFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534929B3296A006700DDC934 /* NewsFeedCell.swift */; };
 		53500C9D296AFFBD009E2E4C /* NewsFeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53500C9C296AFFBD009E2E4C /* NewsFeedCell.xib */; };
 		535210C52948596600A4C9DB /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535210C32948596600A4C9DB /* ImageCell.swift */; };
@@ -51,8 +40,6 @@
 		53D2F8602A8E15BC00E5FAEA /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D2F85F2A8E15BC00E5FAEA /* Utility.swift */; };
 		53E39DF529E91041001E2D34 /* HamburgerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E39DF429E91041001E2D34 /* HamburgerModel.swift */; };
 		53E39DF729E91871001E2D34 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E39DF629E91871001E2D34 /* Protocols.swift */; };
-		53E39DFA29E91CDB001E2D34 /* SavedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E39DF829E91CDB001E2D34 /* SavedVC.swift */; };
-		53E39DFB29E91CDB001E2D34 /* SavedVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53E39DF929E91CDB001E2D34 /* SavedVC.xib */; };
 		53E8DE2629518C74001EB3F8 /* SubmitButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E8DE2429518C74001EB3F8 /* SubmitButtonCell.swift */; };
 		53E8DE2729518C74001EB3F8 /* SubmitButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53E8DE2529518C74001EB3F8 /* SubmitButtonCell.xib */; };
 		53EC763B29E8718A008C6E1E /* HamburgerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EC763929E8718A008C6E1E /* HamburgerVC.swift */; };
@@ -66,17 +53,6 @@
 		5303331E293B54BA004E6BD3 /* MainVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainVC.xib; sourceTree = "<group>"; };
 		53033323293B552B004E6BD3 /* HamburgerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HamburgerCell.swift; sourceTree = "<group>"; };
 		53033324293B552B004E6BD3 /* HamburgerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HamburgerCell.xib; sourceTree = "<group>"; };
-		5303477729E5774600FB9E02 /* ScienceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScienceVC.swift; sourceTree = "<group>"; };
-		5303477829E5774600FB9E02 /* ScienceVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScienceVC.xib; sourceTree = "<group>"; };
-		5303477B29E5776B00FB9E02 /* TechnologyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TechnologyVC.swift; sourceTree = "<group>"; };
-		5303477C29E5776B00FB9E02 /* TechnologyVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TechnologyVC.xib; sourceTree = "<group>"; };
-		5303477F29E5777C00FB9E02 /* HealthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthVC.swift; sourceTree = "<group>"; };
-		5303478129E5779300FB9E02 /* EntertainmentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntertainmentVC.swift; sourceTree = "<group>"; };
-		5303478229E5779300FB9E02 /* EntertainmentVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EntertainmentVC.xib; sourceTree = "<group>"; };
-		5303478529E577C700FB9E02 /* BusinessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessVC.swift; sourceTree = "<group>"; };
-		5303478629E577C700FB9E02 /* BusinessVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BusinessVC.xib; sourceTree = "<group>"; };
-		5303478929E577D500FB9E02 /* SportsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsVC.swift; sourceTree = "<group>"; };
-		5303478A29E577D500FB9E02 /* SportsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SportsVC.xib; sourceTree = "<group>"; };
 		534929B3296A006700DDC934 /* NewsFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedCell.swift; sourceTree = "<group>"; };
 		53500C9C296AFFBD009E2E4C /* NewsFeedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NewsFeedCell.xib; path = "../../../Daily Bugle/Daily Bugle/My Cells/NewsFeedCell.xib"; sourceTree = "<group>"; };
 		535210C32948596600A4C9DB /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
@@ -105,8 +81,6 @@
 		53D2F85F2A8E15BC00E5FAEA /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		53E39DF429E91041001E2D34 /* HamburgerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HamburgerModel.swift; sourceTree = "<group>"; };
 		53E39DF629E91871001E2D34 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
-		53E39DF829E91CDB001E2D34 /* SavedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedVC.swift; sourceTree = "<group>"; };
-		53E39DF929E91CDB001E2D34 /* SavedVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SavedVC.xib; sourceTree = "<group>"; };
 		53E8DE2429518C74001EB3F8 /* SubmitButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitButtonCell.swift; sourceTree = "<group>"; };
 		53E8DE2529518C74001EB3F8 /* SubmitButtonCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubmitButtonCell.xib; sourceTree = "<group>"; };
 		53EC763929E8718A008C6E1E /* HamburgerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HamburgerVC.swift; sourceTree = "<group>"; };
@@ -146,21 +120,8 @@
 				5303331E293B54BA004E6BD3 /* MainVC.xib */,
 				53033311293B4DF0004E6BD3 /* SignUpVC.swift */,
 				53033312293B4DF0004E6BD3 /* SignUpVC.xib */,
-				5303477729E5774600FB9E02 /* ScienceVC.swift */,
-				5303477829E5774600FB9E02 /* ScienceVC.xib */,
-				5303477B29E5776B00FB9E02 /* TechnologyVC.swift */,
-				5303477C29E5776B00FB9E02 /* TechnologyVC.xib */,
-				5303477F29E5777C00FB9E02 /* HealthVC.swift */,
-				5303478129E5779300FB9E02 /* EntertainmentVC.swift */,
-				5303478229E5779300FB9E02 /* EntertainmentVC.xib */,
-				5303478529E577C700FB9E02 /* BusinessVC.swift */,
-				5303478629E577C700FB9E02 /* BusinessVC.xib */,
-				5303478929E577D500FB9E02 /* SportsVC.swift */,
-				5303478A29E577D500FB9E02 /* SportsVC.xib */,
 				53EC763929E8718A008C6E1E /* HamburgerVC.swift */,
 				53EC763A29E8718A008C6E1E /* HamburgerVC.xib */,
-				53E39DF829E91CDB001E2D34 /* SavedVC.swift */,
-				53E39DF929E91CDB001E2D34 /* SavedVC.xib */,
 			);
 			path = "My ViewControllers";
 			sourceTree = "<group>";
@@ -346,18 +307,12 @@
 				53EC763C29E8718A008C6E1E /* HamburgerVC.xib in Resources */,
 				53500C9D296AFFBD009E2E4C /* NewsFeedCell.xib in Resources */,
 				53033326293B552B004E6BD3 /* HamburgerCell.xib in Resources */,
-				5303477A29E5774600FB9E02 /* ScienceVC.xib in Resources */,
 				535210C62948596600A4C9DB /* ImageCell.xib in Resources */,
-				53E39DFB29E91CDB001E2D34 /* SavedVC.xib in Resources */,
-				5303478829E577C700FB9E02 /* BusinessVC.xib in Resources */,
 				53033314293B4DF0004E6BD3 /* SignUpVC.xib in Resources */,
 				5379520B2967370600B4D763 /* GoogleService-Info.plist in Resources */,
 				535210D2294865CB00A4C9DB /* ProfilePicCell.xib in Resources */,
 				5368F7FB29375012009C1584 /* LaunchScreen.storyboard in Resources */,
-				5303478429E5779300FB9E02 /* EntertainmentVC.xib in Resources */,
 				5368F80529375128009C1584 /* LoginController.xib in Resources */,
-				5303477E29E5776B00FB9E02 /* TechnologyVC.xib in Resources */,
-				5303478C29E577D500FB9E02 /* SportsVC.xib in Resources */,
 				53033320293B54BA004E6BD3 /* MainVC.xib in Resources */,
 				5368F7F829375012009C1584 /* Assets.xcassets in Resources */,
 			);
@@ -415,8 +370,6 @@
 				53B1CA39295EA8A200A9F000 /* Extensions.swift in Sources */,
 				53E8DE2629518C74001EB3F8 /* SubmitButtonCell.swift in Sources */,
 				53EC763B29E8718A008C6E1E /* HamburgerVC.swift in Sources */,
-				5303478029E5777C00FB9E02 /* HealthVC.swift in Sources */,
-				53E39DFA29E91CDB001E2D34 /* SavedVC.swift in Sources */,
 				5368F7F629375010009C1584 /* Daily_Bugle.xcdatamodeld in Sources */,
 				5368F7EC29375010009C1584 /* AppDelegate.swift in Sources */,
 				5368F7EE29375010009C1584 /* SceneDelegate.swift in Sources */,
@@ -425,21 +378,16 @@
 				534929B5296A006700DDC934 /* NewsFeedCell.swift in Sources */,
 				535210D0294865CB00A4C9DB /* InputCell.swift in Sources */,
 				5378268829E5265B008B7BB9 /* APIError.swift in Sources */,
-				5303477929E5774600FB9E02 /* ScienceVC.swift in Sources */,
 				53E39DF729E91871001E2D34 /* Protocols.swift in Sources */,
 				53033325293B552B004E6BD3 /* HamburgerCell.swift in Sources */,
-				5303478B29E577D500FB9E02 /* SportsVC.swift in Sources */,
 				5368F80429375128009C1584 /* LoginController.swift in Sources */,
 				538B903229A7718400B3E54A /* MyArticle.swift in Sources */,
 				5303331F293B54BA004E6BD3 /* MainVC.swift in Sources */,
 				5378268629E51533008B7BB9 /* NewsAPIBackend.swift in Sources */,
-				5303478729E577C700FB9E02 /* BusinessVC.swift in Sources */,
 				535210C52948596600A4C9DB /* ImageCell.swift in Sources */,
 				535210CD294865CB00A4C9DB /* ProfilePicCell.swift in Sources */,
-				5303478329E5779300FB9E02 /* EntertainmentVC.swift in Sources */,
 				53A605C729A38EC000C9737B /* NewsAPIModel.swift in Sources */,
 				537F53ED294ECF0100AFD139 /* UserModel.swift in Sources */,
-				5303477D29E5776B00FB9E02 /* TechnologyVC.swift in Sources */,
 				53E39DF529E91041001E2D34 /* HamburgerModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

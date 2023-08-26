@@ -3,4 +3,189 @@
    uuid = "B5041C4B-E4D9-44CD-9749-28D2658BC50D"
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "09B57176-2460-4785-AB5F-2C8D100B2523"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Daily Bugle/My ViewControllers/MainVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "13"
+            endingLineNumber = "13"
+            landmarkName = "MainVC"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "09B57176-2460-4785-AB5F-2C8D100B2523 - 28907f6da5fbebe8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Daily_Bugle.MainVC.newsConnection.getter : Daily_Bugle.NewsAPIBackend"
+                  moduleName = "Daily Bugle"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/SPIDER77/iOS/Current%20Working%20Projects/Daily%20Bugle/Daily%20Bugle/My%20ViewControllers/MainVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "100">
+               </Location>
+               <Location
+                  uuid = "09B57176-2460-4785-AB5F-2C8D100B2523 - ce9334bbd5846955"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Daily_Bugle.MainVC.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; Daily_Bugle.MainVC"
+                  moduleName = "Daily Bugle"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/SPIDER77/iOS/Current%20Working%20Projects/Daily%20Bugle/Daily%20Bugle/My%20ViewControllers/MainVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "160">
+               </Location>
+               <Location
+                  uuid = "09B57176-2460-4785-AB5F-2C8D100B2523 - 90bec97240c919ce"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Daily_Bugle.MainVC.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;Daily_Bugle.MainVC&gt;"
+                  moduleName = "Daily Bugle"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/SPIDER77/iOS/Current%20Working%20Projects/Daily%20Bugle/Daily%20Bugle/My%20ViewControllers/MainVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "136">
+               </Location>
+               <Location
+                  uuid = "09B57176-2460-4785-AB5F-2C8D100B2523 - 3cc047dbcc4fe0a3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Daily_Bugle.MainVC.myCategory.getter : Swift.Optional&lt;Daily_Bugle.Category&gt;"
+                  moduleName = "Daily Bugle"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/SPIDER77/iOS/Current%20Working%20Projects/Daily%20Bugle/Daily%20Bugle/My%20ViewControllers/MainVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "84">
+               </Location>
+               <Location
+                  uuid = "09B57176-2460-4785-AB5F-2C8D100B2523 - 710b4ce7912270b7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Daily_Bugle.MainVC.myCategory.setter : Swift.Optional&lt;Daily_Bugle.Category&gt;"
+                  moduleName = "Daily Bugle"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/SPIDER77/iOS/Current%20Working%20Projects/Daily%20Bugle/Daily%20Bugle/My%20ViewControllers/MainVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "92">
+               </Location>
+               <Location
+                  uuid = "09B57176-2460-4785-AB5F-2C8D100B2523 - e3e33ef2d76474a4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Daily_Bugle.MainVC.myCategory.modify : Swift.Optional&lt;Daily_Bugle.Category&gt;"
+                  moduleName = "Daily Bugle"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/SPIDER77/iOS/Current%20Working%20Projects/Daily%20Bugle/Daily%20Bugle/My%20ViewControllers/MainVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "0">
+               </Location>
+               <Location
+                  uuid = "09B57176-2460-4785-AB5F-2C8D100B2523 - 15e06b2f5d5ea6d3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Daily_Bugle.MainVC.myCategory.modify : Swift.Optional&lt;Daily_Bugle.Category&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "Daily Bugle"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/SPIDER77/iOS/Current%20Working%20Projects/Daily%20Bugle/Daily%20Bugle/My%20ViewControllers/MainVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  uuid = "09B57176-2460-4785-AB5F-2C8D100B2523 - ce9334bbd5846955"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Daily_Bugle.MainVC.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; Daily_Bugle.MainVC"
+                  moduleName = "Daily Bugle"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/SPIDER77/iOS/Current%20Working%20Projects/Daily%20Bugle/Daily%20Bugle/My%20ViewControllers/MainVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "216">
+               </Location>
+               <Location
+                  uuid = "09B57176-2460-4785-AB5F-2C8D100B2523 - 90bec97240c919ce"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Daily_Bugle.MainVC.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;Daily_Bugle.MainVC&gt;"
+                  moduleName = "Daily Bugle"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/SPIDER77/iOS/Current%20Working%20Projects/Daily%20Bugle/Daily%20Bugle/My%20ViewControllers/MainVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "192">
+               </Location>
+               <Location
+                  uuid = "09B57176-2460-4785-AB5F-2C8D100B2523 - 710b4ce7912270b7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Daily_Bugle.MainVC.myCategory.setter : Swift.Optional&lt;Daily_Bugle.Category&gt;"
+                  moduleName = "Daily Bugle"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/SPIDER77/iOS/Current%20Working%20Projects/Daily%20Bugle/Daily%20Bugle/My%20ViewControllers/MainVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "96">
+               </Location>
+               <Location
+                  uuid = "09B57176-2460-4785-AB5F-2C8D100B2523 - 15e06b2f5d5ea6d3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Daily_Bugle.MainVC.myCategory.modify : Swift.Optional&lt;Daily_Bugle.Category&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "Daily Bugle"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/SPIDER77/iOS/Current%20Working%20Projects/Daily%20Bugle/Daily%20Bugle/My%20ViewControllers/MainVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "20">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

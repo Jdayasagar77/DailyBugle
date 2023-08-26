@@ -7,10 +7,6 @@
 
 import Foundation
 
-protocol HamburgerVCDelegate {
-    func selectedCell(_ row: Int)
-}
-
-protocol CurrentUser {
-    func activeUser(_ email: String)
+protocol GetNews{
+    func getNews(category: Category)
 }

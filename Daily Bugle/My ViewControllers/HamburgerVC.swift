@@ -6,29 +6,24 @@
 //
 
 import UIKit
-import FirebaseFirestore
 
 class HamburgerVC: UIViewController {
-
+    
+    var newsDelegate: GetNews?
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var hamTableView: UITableView!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var profileImage: UIImageView!
-    let db = Firestore.firestore()
-    var hamDelegate: HamburgerVCDelegate?
     var defaultHighlightedCell: Int = 0
-    private let jsonDecoder: JSONDecoder = {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        return decoder
-    }()
     
     var menu: [HamModel] = [
-        HamModel(icon: UIImage(named: "Ham1")!, title: "Technology"),
-        HamModel(icon: UIImage(named: "Ham2")!, title: "Business"),
-        HamModel(icon: UIImage(named: "Ham3")!, title: "Entertainment"),
-        HamModel(icon: UIImage(named: "Ham4")!, title: "Science"),
-        HamModel(icon: UIImage(systemName: "bookmark.fill")!, title: "Saved")
+//        HamModel(icon: UIImage(systemName: "bookmark.fill")!, title: "Saved")
+        HamModel(icon: UIImage(named: "Ham1") ?? UIImage(), title: .technology),
+        HamModel(icon: UIImage(named: "Ham2") ?? UIImage(), title: .business),
+        HamModel(icon: UIImage(named: "Ham3") ?? UIImage(), title: .entertainment),
+        HamModel(icon: UIImage(named: "Ham4") ?? UIImage(), title: .science),
+        HamModel(icon: UIImage(named: "Ham1") ?? UIImage(), title: .health),
+        HamModel(icon: UIImage(named: "Ham1") ?? UIImage(), title: .sports)
         ]
     
     override func viewDidLoad() {
@@ -41,23 +36,19 @@ class HamburgerVC: UIViewController {
                self.hamTableView.dataSource = self
                self.hamTableView.backgroundColor = #colorLiteral(red: 0.737254902, green: 0.1294117647, blue: 0.2941176471, alpha: 1)
                self.hamTableView.separatorStyle = .none
+        
                // Set Highlighted Cell
                DispatchQueue.main.async {
                    let defaultRow = IndexPath(row: self.defaultHighlightedCell, section: 0)
                    self.hamTableView.selectRow(at: defaultRow, animated: false, scrollPosition: .none)
                }
 
-               // Footer
-//               self.footerLabel.textColor = UIColor.white
-//               self.footerLabel.font = UIFont.systemFont(ofSize: 12, weight: .bold)
-//               self.footerLabel.text = ""
-
                // Register TableView Cell
                 self.hamTableView.register(UINib(nibName: "HamburgerCell", bundle: nil), forCellReuseIdentifier: "HamburgerCell")
 
                // Update TableView with the data
-               self.hamTableView.reloadData()
-        self.hamTableView.estimatedRowHeight = 100
+                self.hamTableView.reloadData()
+                self.hamTableView.estimatedRowHeight = 100
 
     }
 
@@ -89,29 +80,28 @@ extension HamburgerVC: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "HamburgerCell", for: indexPath) as? HamburgerCell else { fatalError("xib doesn't exist") }
 
               cell.iconImageView.image = self.menu[indexPath.row].icon
-              cell.titleLabel.text = self.menu[indexPath.row].title
+            cell.titleLabel.text = self.menu[indexPath.row].title.categoryName
 
               // Highlighted color
               let myCustomSelectionColorView = UIView()
               myCustomSelectionColorView.backgroundColor = #colorLiteral(red: 0.6196078431, green: 0.1098039216, blue: 0.2509803922, alpha: 1)
               cell.selectedBackgroundView = myCustomSelectionColorView
               return cell
+        
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.hamDelegate?.selectedCell(indexPath.row)
+        
+//        DispatchQueue.main.async {
+            if self.newsDelegate != nil {
+                self.newsDelegate?.getNews(category:  self.menu[indexPath.row].title )
+                navigationController?.popViewController(animated: true)
+            } else {
+                print("Delegate is nil")
+            }
+            
+      //  }
+       
     }
-    
-}
-
-
-
-extension HamburgerVC : CurrentUser {
-    
-    
-    func activeUser(_ email: String) {
-        self.emailLabel.text = email
-        }
-    
-    
     
 }

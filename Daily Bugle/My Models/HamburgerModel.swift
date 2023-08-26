@@ -9,6 +9,9 @@ import Foundation
 import UIKit
 
 struct HamModel {
+    
     var icon: UIImage
-    var title: String
+    
+    var title: Category
+    
 }

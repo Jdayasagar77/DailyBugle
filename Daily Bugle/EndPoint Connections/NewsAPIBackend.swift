@@ -75,6 +75,34 @@ enum Category: String, CaseIterable {
         }
         return rawValue.capitalized
     }
+    
+    var categoryName: String {
+        
+        switch self {
+                
+            case .general:
+                return "General"
+                
+            case .business:
+                return "Business"
+
+            case .technology:
+                return "Bechnology"
+
+            case .entertainment:
+                return "Entertainment"
+
+            case .sports:
+                return "Sports"
+
+            case .science:
+                return "Science"
+
+            case .health:
+                return "Health"
+
+        }
+    }
 }
 
 extension Category: Identifiable {

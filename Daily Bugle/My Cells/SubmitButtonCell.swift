@@ -29,6 +29,3 @@ class SubmitButtonCell: UITableViewCell {
     
 }
 
-protocol didTap: AnyObject{
-    func didTapButton()
-}
