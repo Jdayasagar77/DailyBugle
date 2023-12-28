@@ -153,7 +153,7 @@ extension SignUpVC: UITableViewDataSource, UITableViewDelegate {
                 "address":"\(String(describing: self.user.address!))",
                 "state":"\(String(describing: self.user.state!))",
                 "pincode":"\(String(describing: self.user.pincode!))",
-                "profilePic" : "\(String(decoding: self.user.profilePic!, as: UTF8.self))"
+                "profilePic" : "\(String(describing: self.user.profilePic!))"
                         ])
                     print(error as Any)
 
@@ -197,14 +197,9 @@ extension SignUpVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
           if let theImage = info[UIImagePickerController.InfoKey.editedImage]
                 as? UIImage {
               myImage = theImage
-              user.image = theImage
-              
-              if #available(iOS 17.0, *) {
-                  user.profilePic =  theImage.heicData()
-              } else {
-                  // Fallback on earlier versions
-                  user.profilePic = theImage.pngData()
-              }
+              let imageData:Data = theImage.jpegData(compressionQuality: 0.2)!
+              let strBase64 = imageData.base64EncodedString(options: .lineLength64Characters)
+              user.profilePic = strBase64
 
             }
      

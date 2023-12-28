@@ -6,11 +6,14 @@
 //
 
 import UIKit
+import FirebaseCore
+import FirebaseAuth
+import FirebaseFirestore
+
 
 class MainVC: UIViewController, UserConfigurationDelegate  {
     
     var userUID: String?
-
     var user: UserModel?
     let myHamVC = HamburgerVC.init(nibName: "HamburgerVC", bundle: nil)
     var myCategory: Category?
@@ -57,7 +60,16 @@ class MainVC: UIViewController, UserConfigurationDelegate  {
                     print(error)
                 case .success(let news):
                     print("--- success with \(news.count)")
-                    self?.myArticles = news
+                let filteredArticles = news.filter { article in
+                    // Check if any of the properties in the article is nil
+                    return article.author != nil &&
+                           article.title != nil &&
+                           article.description != nil &&
+                           article.url != nil &&
+                           article.urlToImage != nil &&
+                           article.publishedAt != nil
+                }
+                    self?.myArticles = filteredArticles
                     self?.mainTable.reloadData()
                 }
             }
@@ -100,24 +112,57 @@ extension MainVC : UITableViewDelegate,UITableViewDataSource, GetNews {
             cell?.saveButton.tintColor = .white
         }
         cell?.handler = {
-            print(self.myArticles?[indexPath.row] as Any)
-            let url = self.getDocumentsDirectory().appendingPathComponent("article.txt")
             
-            do {
-             
-                try self.myArticles![indexPath.row].title?.write(to: url, atomically: true, encoding: .utf8)
-                try self.myArticles![indexPath.row].description?.write(to: url, atomically: true, encoding: .utf8)
-                try self.myArticles![indexPath.row].urlToImage?.write(to: url, atomically: true, encoding: .utf8)
-                try self.myArticles![indexPath.row].publishedAt?.write(to: url, atomically: true, encoding: .utf8)
-                try self.myArticles![indexPath.row].content?.write(to: url, atomically: true, encoding: .utf8)
+          //  debugPrint(self.myHamVC.userConfig?.userUID as Any)
+            
+         //   print(self.myArticles?[indexPath.row] as Any)
+            
+            let newArticle = Article(source: self.myArticles![indexPath.row].source, author: self.myArticles![indexPath.row].author, title: self.myArticles![indexPath.row].title, description: self.myArticles![indexPath.row].description, url: self.myArticles![indexPath.row].url, urlToImage: self.myArticles![indexPath.row].urlToImage, publishedAt: self.myArticles![indexPath.row].publishedAt, content: self.myArticles![indexPath.row].content)
+            
+            Firestore.firestore().collection("Users").document(self.myHamVC.userConfig!.userUID ?? "").collection("savedArticles").document("\(newArticle.title!)").setData([
+                "author":newArticle.author!,
+                "title":newArticle.title!,
+                "description":newArticle.description!,
+                "url":newArticle.url!,
+                "urlToImage":newArticle.urlToImage!,
+                "publishedAt":newArticle.publishedAt!
+            ])
+         //   Firestore.firestore().collection("Users").document(self.myHamVC.userConfig!.userUID ?? "").collection("savedArticles").
+            Firestore.firestore().collection("Users").document(self.myHamVC.userConfig!.userUID ?? "").collection("savedArticles").getDocuments { doc, error in
                 
-                let input = try String(contentsOf: url)
-                print(input)
+               let isThere = doc?.documents.contains(where: { mydoc in
+                   mydoc.documentID == newArticle.title
+                })
                 
-            } catch {
-                print(error.localizedDescription)
-            }
+                debugPrint(isThere as Any)
+                
+                debugPrint(doc?.count as Any)
+                debugPrint(doc?.description as Any)
+                debugPrint(doc?.documents.first as Any)
+                debugPrint(doc?.documents.first?.documentID as Any)
 
+            }
+            
+            /*    .addDocument(data: [
+                "author":newArticle.author!,
+                "title":newArticle.title!,
+                "description":newArticle.description!,
+                "url":newArticle.url!,
+                "urlToImage":newArticle.urlToImage!,
+                "publishedAt":newArticle.publishedAt!,
+                "content": newArticle.content!,
+            ]) { error in
+                debugPrint(error as Any)
+            }
+             */
+            
+                /*
+                .setData([
+                "savedArticles": Article(source: self.myArticles![indexPath.row].source, author: self.myArticles![indexPath.row].author, title: self.myArticles![indexPath.row].title, description: self.myArticles![indexPath.row].description, url: self.myArticles![indexPath.row].url, urlToImage: self.myArticles![indexPath.row].urlToImage, publishedAt: self.myArticles![indexPath.row].publishedAt, content: self.myArticles![indexPath.row].content)
+            ], merge: true)
+            */
+            
+           //
         }
        
         return cell ?? UITableViewCell()

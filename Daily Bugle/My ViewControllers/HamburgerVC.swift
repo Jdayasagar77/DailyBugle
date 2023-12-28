@@ -25,7 +25,8 @@ class HamburgerVC: BaseClass {
         HamModel(icon: UIImage(named: "Ham3") ?? UIImage(), title: .entertainment),
         HamModel(icon: UIImage(named: "Ham4") ?? UIImage(), title: .science),
         HamModel(icon: UIImage(named: "Ham1") ?? UIImage(), title: .health),
-        HamModel(icon: UIImage(named: "Ham1") ?? UIImage(), title: .sports),        HamModel(icon: UIImage(named: "Ham1") ?? UIImage(), title: .saved)
+        HamModel(icon: UIImage(named: "Ham1") ?? UIImage(), title: .sports),     HamModel(icon: UIImage(named: "Ham1") ?? UIImage(), title: .saved)
+        
         ]
     
     override func viewDidLoad() {
@@ -50,12 +51,15 @@ class HamburgerVC: BaseClass {
                // Update TableView with the data
                 self.hamTableView.reloadData()
                 self.hamTableView.estimatedRowHeight = 300
-        print(self.userConfig!.userUID)
+        print(self.userConfig!.userUID as Any)
         db.collection("Users").document(userConfig!.userUID ?? "").getDocument { doc, error in
             let userData = doc?.data()
             self.userNameLabel.text = userData?["name"] as? String ?? ""
             self.emailLabel.text = userData?["email"] as? String ?? ""
-            self.profileImage.image = UIImage(data: Data( (userData?["profilePic"] as? String ?? "").utf8))
+            debugPrint(userData?["profilePic"] as? String ?? "")
+            let dataDecoded:Data = Data(base64Encoded: userData?["profilePic"] as? String ?? "", options: .ignoreUnknownCharacters)!
+            self.profileImage.image =  UIImage(data: dataDecoded as Data) ?? UIImage()
+            
         }
         
     }
@@ -108,3 +112,6 @@ extension HamburgerVC: UITableViewDelegate, UITableViewDataSource {
     //  }
     }
 }
+
+
+

@@ -37,6 +37,7 @@ struct NewsAPIBackend {
             }else if let data = data {
                 do {
                     let news = try jsonDecoder.decode(NewsAPI.self, from: data)
+                    
                     completion(Result.success(news.articles!))
                     
                 }catch {

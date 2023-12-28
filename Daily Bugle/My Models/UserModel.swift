@@ -10,8 +10,7 @@ import UIKit
 
 class UserModel: Codable {
     
-    var profilePic: Data?
-    var image: UIImage?
+    var profilePic: String?
     var name: String?
     var email: String?
     var mobileNumber: String?
@@ -20,7 +19,7 @@ class UserModel: Codable {
     var pincode: String?
     var password: String?
     var confirmPassword: String?
-    
+    var savedArticles:[Article]?
     init() {
         
     }

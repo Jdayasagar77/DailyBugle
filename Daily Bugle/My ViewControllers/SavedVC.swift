@@ -7,10 +7,16 @@
 
 import UIKit
 
-class SavedVC: UIViewController {
-
+class SavedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    @IBOutlet weak var savedTableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.savedTableView.register(UINib(nibName: "NewsFeedCell", bundle: nil), forCellReuseIdentifier: "NewsFeedCell")
+        self.savedTableView.delegate = self
+        self.savedTableView.dataSource = self
+        self.savedTableView.estimatedRowHeight = 300
 
         // Do any additional setup after loading the view.
     }
@@ -25,4 +31,20 @@ class SavedVC: UIViewController {
     }
     */
 
+}
+
+
+
+
+
+extension SavedVC {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        <#code#>
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        <#code#>
+    }
+    
 }

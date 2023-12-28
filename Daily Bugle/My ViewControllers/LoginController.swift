@@ -41,7 +41,7 @@ class LoginController: BaseClass {
                 if let user = authResult?.user {
                     
                     strongSelf.dismiss(animated: true)
-                 Utility.shared.setDataWhenUserLogin(userEmail: user.email ?? "")
+               //  Utility.shared.setDataWhenUserLogin(userEmail: user.email ?? "")
                     debugPrint("User \(user.uid as Any) Has Logged In from Firebase")
                     let myVC = MainVC.init(nibName: "MainVC", bundle: nil)
                     let myNav = UINavigationController.init(rootViewController: myVC)
