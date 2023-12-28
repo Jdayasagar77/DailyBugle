@@ -68,7 +68,7 @@ enum Category: String, CaseIterable {
     case sports
     case science
     case health
-    
+    case saved
     var text: String {
         if self == .general {
             return "Top Headlines"
@@ -87,7 +87,7 @@ enum Category: String, CaseIterable {
                 return "Business"
 
             case .technology:
-                return "Bechnology"
+                return "Technology"
 
             case .entertainment:
                 return "Entertainment"
@@ -101,6 +101,8 @@ enum Category: String, CaseIterable {
             case .health:
                 return "Health"
 
+            case .saved:
+                return "Saved"
         }
     }
 }

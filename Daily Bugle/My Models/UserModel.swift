@@ -10,7 +10,7 @@ import UIKit
 
 class UserModel: Codable {
     
-    var profilePic: String?
+    var profilePic: Data?
     var image: UIImage?
     var name: String?
     var email: String?
@@ -21,9 +21,9 @@ class UserModel: Codable {
     var password: String?
     var confirmPassword: String?
     
-    init(
-
-    ){}
+    init() {
+        
+    }
 
     enum CodingKeys: String, CodingKey {
         

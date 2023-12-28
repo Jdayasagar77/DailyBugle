@@ -11,13 +11,14 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class SignUpVC: UIViewController {
+    
     let dataArray = [["ProfilePic", "Name", "Email Id", "Mobile Number", "Password", "Confirm Password"], ["Address", "State", "Pincode", "Submit"]]
+    
     let myIndexPath = [[0,1,2,3,4,5],[6,7,8,9]]
     var myImage: UIImage?
     var user : UserModel = UserModel()
     let authenticate = Auth.auth()
     let db = Firestore.firestore()
-
     
     @IBAction func closeAction(_ sender: UIButton) {
         self.dismiss(animated: true)
@@ -28,6 +29,7 @@ class SignUpVC: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
         self.navigationController?.isNavigationBarHidden = true
         
      
@@ -58,6 +60,7 @@ class SignUpVC: UIViewController {
                self.view.frame.origin.y = 0
            }
        }
+    
     /// Image Picker open
     func selectImage() {
         let imagePicker = UIImagePickerController()
@@ -81,6 +84,7 @@ extension SignUpVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dataArray[section].count
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
        
@@ -149,7 +153,7 @@ extension SignUpVC: UITableViewDataSource, UITableViewDelegate {
                 "address":"\(String(describing: self.user.address!))",
                 "state":"\(String(describing: self.user.state!))",
                 "pincode":"\(String(describing: self.user.pincode!))",
-                "profilePic" : "\(String(describing: self.user.profilePic!))"
+                "profilePic" : "\(String(decoding: self.user.profilePic!, as: UTF8.self))"
                         ])
                     print(error as Any)
 
@@ -186,6 +190,7 @@ extension SignUpVC: UITableViewDataSource, UITableViewDelegate {
 
 
 extension SignUpVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info:
                                [UIImagePickerController.InfoKey : Any]) {
@@ -193,11 +198,15 @@ extension SignUpVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
                 as? UIImage {
               myImage = theImage
               user.image = theImage
-              user.profilePic =  theImage.jpegData(compressionQuality: 0.2)?.base64EncodedString()
+              
+              if #available(iOS 17.0, *) {
+                  user.profilePic =  theImage.heicData()
+              } else {
+                  // Fallback on earlier versions
+                  user.profilePic = theImage.pngData()
+              }
 
-             
-
-          }
+            }
      
         self.signUpTableView.reloadData()
         dismiss(animated: true, completion: nil)
@@ -239,7 +248,7 @@ extension SignUpVC: UITextFieldDelegate {
                 debugPrint("User Entered Invalid Mail")
             }
                case TextFieldData.phoneTextField.rawValue:
-            self.user.mobileNumber = textField.text
+                self.user.mobileNumber = textField.text
                    
                case TextFieldData.passwordTextField.rawValue:
             if textField.text?.utf8CString.count ?? 0 >= 5 {

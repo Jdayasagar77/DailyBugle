@@ -3,4 +3,70 @@
    uuid = "B5041C4B-E4D9-44CD-9749-28D2658BC50D"
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4B8842D4-1824-4D4D-B8F8-9798FBA72563"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Daily Bugle/My ViewControllers/HamburgerVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4B8842D4-1824-4D4D-B8F8-9798FBA72563 - 3f37f4a7894354dd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Daily_Bugle.HamburgerVC.viewDidLoad() -&gt; ()"
+                  moduleName = "Daily Bugle"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/SPIDER77/iOS/Current%20Working%20Projects/Daily%20Bugle/Daily%20Bugle/My%20ViewControllers/HamburgerVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "54"
+                  endingLineNumber = "54"
+                  offsetFromSymbolStart = "2656">
+               </Location>
+               <Location
+                  uuid = "4B8842D4-1824-4D4D-B8F8-9798FBA72563 - 3f37f4a7894354bc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Daily_Bugle.HamburgerVC.viewDidLoad() -&gt; ()"
+                  moduleName = "Daily Bugle"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/SPIDER77/iOS/Current%20Working%20Projects/Daily%20Bugle/Daily%20Bugle/My%20ViewControllers/HamburgerVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "53"
+                  endingLineNumber = "53"
+                  offsetFromSymbolStart = "2640">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "51CB217F-504C-4F66-95E0-29189ED4233B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Daily Bugle/My ViewControllers/HamburgerVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

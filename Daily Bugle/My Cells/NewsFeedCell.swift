@@ -13,7 +13,7 @@ class NewsFeedCell: UITableViewCell {
     @IBOutlet weak var articleImage: UIImageView!
     @IBOutlet weak var articlePublished: UILabel!
     @IBOutlet weak var articleTitle: UILabel!
-    var handler: (()->())?
+    var handler: (()->Void)?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

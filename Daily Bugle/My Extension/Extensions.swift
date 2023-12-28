@@ -9,27 +9,34 @@ import Foundation
 import UIKit
 
 
+
 extension UIViewController {
     func isVisible() -> Bool {
         return self.isViewLoaded && self.view.window != nil
     }
+    func getDocumentsDirectory() -> URL {
+        // find all possible documents directories for this user
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        
+        // just send back the first one, which ought to be the only one
+        return paths[0]
+    }
 }
 
 extension UIImageView {
-  public func maskCircle(anyImage: UIImage) {
+        public func maskCircle(anyImage: UIImage) {
       self.contentMode = UIView.ContentMode.scaleToFill
            // Make Image Corners Rounded
       self.layer.cornerRadius = 80
       self.clipsToBounds = true
       self.layer.borderWidth = 3
       self.layer.borderColor = UIColor.lightGray.cgColor
-   self.image = anyImage
+      self.image = anyImage
   }
 }
 
 extension UIViewController {
    
-    
     // With this extension you can access the MainViewController from the child view controllers.
     func revealViewController() -> MainVC? {
         var viewController: UIViewController? = self
@@ -53,20 +60,20 @@ extension UIViewController {
 extension LoginController : UITextFieldDelegate{
     
     /**
-      * Called when 'return' key pressed. return NO to ignore.
-      */
+     * Called when 'return' key pressed. return NO to ignore.
+     */
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-         textField.resignFirstResponder()
-         return true
-     }
-
+        textField.resignFirstResponder()
+        return true
+    }
+    
     /**
      * Called when the user click on the view (outside the UITextField).
      */
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
-
     }
+    
 }
 
 
@@ -79,8 +86,7 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func setupToHideKeyboardOnTapOnView()
-    {
+    func setupToHideKeyboardOnTapOnView() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(
             target: self,
             action: #selector(UIViewController.dismissKeyboard))
@@ -89,7 +95,7 @@ extension UIViewController {
         view.addGestureRecognizer(tap)
     }
 
-    @objc func dismissKeyboard(){
+    @objc func dismissKeyboard() {
         view.endEditing(true)
     }
 }

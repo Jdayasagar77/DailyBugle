@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
-class HamburgerVC: UIViewController {
-    
+class HamburgerVC: BaseClass {
+
+    var userConfig: UserConfigurationDelegate?
     var newsDelegate: GetNews?
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var hamTableView: UITableView!
@@ -17,13 +19,13 @@ class HamburgerVC: UIViewController {
     var defaultHighlightedCell: Int = 0
     
     var menu: [HamModel] = [
-//        HamModel(icon: UIImage(systemName: "bookmark.fill")!, title: "Saved")
+        //        HamModel(icon: UIImage(systemName: "bookmark.fill")!, title: "Saved")
         HamModel(icon: UIImage(named: "Ham1") ?? UIImage(), title: .technology),
         HamModel(icon: UIImage(named: "Ham2") ?? UIImage(), title: .business),
         HamModel(icon: UIImage(named: "Ham3") ?? UIImage(), title: .entertainment),
         HamModel(icon: UIImage(named: "Ham4") ?? UIImage(), title: .science),
         HamModel(icon: UIImage(named: "Ham1") ?? UIImage(), title: .health),
-        HamModel(icon: UIImage(named: "Ham1") ?? UIImage(), title: .sports)
+        HamModel(icon: UIImage(named: "Ham1") ?? UIImage(), title: .sports),        HamModel(icon: UIImage(named: "Ham1") ?? UIImage(), title: .saved)
         ]
     
     override func viewDidLoad() {
@@ -31,12 +33,11 @@ class HamburgerVC: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        // TableView
+                // TableView
                self.hamTableView.delegate = self
                self.hamTableView.dataSource = self
                self.hamTableView.backgroundColor = #colorLiteral(red: 0.737254902, green: 0.1294117647, blue: 0.2941176471, alpha: 1)
                self.hamTableView.separatorStyle = .none
-        
                // Set Highlighted Cell
                DispatchQueue.main.async {
                    let defaultRow = IndexPath(row: self.defaultHighlightedCell, section: 0)
@@ -49,7 +50,14 @@ class HamburgerVC: UIViewController {
                // Update TableView with the data
                 self.hamTableView.reloadData()
                 self.hamTableView.estimatedRowHeight = 300
-
+        print(self.userConfig!.userUID)
+        db.collection("Users").document(userConfig!.userUID ?? "").getDocument { doc, error in
+            let userData = doc?.data()
+            self.userNameLabel.text = userData?["name"] as? String ?? ""
+            self.emailLabel.text = userData?["email"] as? String ?? ""
+            self.profileImage.image = UIImage(data: Data( (userData?["profilePic"] as? String ?? "").utf8))
+        }
+        
     }
 
     /*
@@ -87,21 +95,16 @@ extension HamburgerVC: UITableViewDelegate, UITableViewDataSource {
               myCustomSelectionColorView.backgroundColor = #colorLiteral(red: 0.6196078431, green: 0.1098039216, blue: 0.2509803922, alpha: 1)
               cell.selectedBackgroundView = myCustomSelectionColorView
               return cell
-        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
 //        DispatchQueue.main.async {
-            if self.newsDelegate != nil {
-                self.newsDelegate?.getNews(category:  self.menu[indexPath.row].title )
-                navigationController?.popViewController(animated: true)
-            } else {
-                print("Delegate is nil")
-            }
-            
-      //  }
-       
+        if self.newsDelegate != nil {
+            self.newsDelegate?.getNews(category:  self.menu[indexPath.row].title )
+            navigationController?.popViewController(animated: true)
+        } else {
+            print("Delegate is nil")
+        }
+    //  }
     }
-    
 }

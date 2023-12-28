@@ -7,6 +7,12 @@
 
 import Foundation
 
+
 protocol GetNews{
     func getNews(category: Category)
 }
+
+protocol UserConfigurationDelegate{
+    var userUID: String? { get }
+}
+

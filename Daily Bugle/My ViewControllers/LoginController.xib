@@ -35,23 +35,26 @@
                                         <constraint firstAttribute="height" constant="125" id="M19-ox-O5h"/>
                                     </constraints>
                                 </imageView>
-                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EoA-LP-UzD">
+                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EoA-LP-UzD">
                                     <rect key="frame" x="75" y="275" width="243" height="34"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>
-                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3r6-Hq-1zJ">
+                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3r6-Hq-1zJ">
                                     <rect key="frame" x="75" y="329" width="243" height="34"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>
                                 <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WVn-Hw-iNd">
                                     <rect key="frame" x="150" y="413" width="93" height="40"/>
+                                    <color key="backgroundColor" systemColor="labelColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="40" id="4Zq-4H-aOc"/>
                                     </constraints>
                                     <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="filled" title="LogIn"/>
+                                    <buttonConfiguration key="configuration" style="filled" title="LogIn">
+                                        <color key="baseBackgroundColor" systemColor="labelColor"/>
+                                    </buttonConfiguration>
                                     <connections>
                                         <action selector="logInAction:" destination="-1" eventType="touchUpInside" id="oXg-aH-WDT"/>
                                     </connections>
@@ -112,6 +115,9 @@
         </view>
     </objects>
     <resources>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

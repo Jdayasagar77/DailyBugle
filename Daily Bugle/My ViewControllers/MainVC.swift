@@ -7,8 +7,10 @@
 
 import UIKit
 
-class MainVC: UIViewController {
+class MainVC: UIViewController, UserConfigurationDelegate  {
     
+    var userUID: String?
+
     var user: UserModel?
     let myHamVC = HamburgerVC.init(nibName: "HamburgerVC", bundle: nil)
     var myCategory: Category?
@@ -34,10 +36,10 @@ class MainVC: UIViewController {
     
     @IBAction func hamBurgerBtnAction(_ sender: UIBarButtonItem) {
         myHamVC.newsDelegate = self
+        myHamVC.userConfig = self
         navigationController?.pushViewController(myHamVC, animated: true)
     }
     
-  
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +48,8 @@ class MainVC: UIViewController {
         self.mainTable.dataSource = self
         self.mainTable.estimatedRowHeight = 300
         print(myCategory as Any)
-        newsConnection.fetchNews(category: myCategory ?? .general) { [weak self] result in DispatchQueue.main.async {
+        newsConnection.fetchNews(category: myCategory ?? .general) { [weak self] result in
+            DispatchQueue.main.async {
             self?.isLoading = false
             switch result {
                 case .failure(let error):
@@ -66,14 +69,11 @@ class MainVC: UIViewController {
 
 
 
-
-
 extension MainVC : UITableViewDelegate,UITableViewDataSource, GetNews {
     
     func getNews(category: Category) {
         self.myCategory = category
     }
-    
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.myArticles != nil {
@@ -99,17 +99,38 @@ extension MainVC : UITableViewDelegate,UITableViewDataSource, GetNews {
             cell?.articlePublished.textColor = .white
             cell?.saveButton.tintColor = .white
         }
+        cell?.handler = {
+            print(self.myArticles?[indexPath.row] as Any)
+            let url = self.getDocumentsDirectory().appendingPathComponent("article.txt")
+            
+            do {
+             
+                try self.myArticles![indexPath.row].title?.write(to: url, atomically: true, encoding: .utf8)
+                try self.myArticles![indexPath.row].description?.write(to: url, atomically: true, encoding: .utf8)
+                try self.myArticles![indexPath.row].urlToImage?.write(to: url, atomically: true, encoding: .utf8)
+                try self.myArticles![indexPath.row].publishedAt?.write(to: url, atomically: true, encoding: .utf8)
+                try self.myArticles![indexPath.row].content?.write(to: url, atomically: true, encoding: .utf8)
+                
+                let input = try String(contentsOf: url)
+                print(input)
+                
+            } catch {
+                print(error.localizedDescription)
+            }
+
+        }
        
         return cell ?? UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        return UITableView.automaticDimension
+            return UITableView.automaticDimension
     }
     
 }
 
-
-
+@available(iOS 17, *)
+#Preview(traits: .portrait, body: {
+    MainVC()
+})
 

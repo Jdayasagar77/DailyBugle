@@ -22,6 +22,9 @@ class Utility: NSObject {
     /// - Parameters:
     ///   - userEmail: Logged in user email id
     ///   - onCoreDatabase: true if user login from coredatabase
+    ///
+    var userEmail : String?
+    
     func setDataWhenUserLogin(userEmail:String) {
         UserDefaults.standard.setValue(true, forKey: DefaultKeys.isUserLogin)
         UserDefaults.standard.setValue(userEmail, forKey: DefaultKeys.emailId)

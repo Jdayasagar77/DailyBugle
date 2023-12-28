@@ -12,13 +12,16 @@ import FirebaseFirestore
 
 
 
-class LoginController: UIViewController {
-
+class LoginController: BaseClass {
+    
+    
     @IBOutlet weak var loginLogo: UIImageView!
     @IBOutlet weak var userNameTxtField: UITextField!
     @IBOutlet weak var passwordTxtField: UITextField!
     @IBOutlet weak var logInButton: UIButton!
     @IBAction func logInAction(_ sender: UIButton)
+    
+    
     {
         if ((userNameTxtField.text?.isEmpty) == nil || userNameTxtField.text?.isValidEmail() == false)
         {
@@ -38,30 +41,15 @@ class LoginController: UIViewController {
                 if let user = authResult?.user {
                     
                     strongSelf.dismiss(animated: true)
-                  //  Utility.shared.setDataWhenUserLogin(userEmail: user.email ?? "")
+                 Utility.shared.setDataWhenUserLogin(userEmail: user.email ?? "")
                     debugPrint("User \(user.uid as Any) Has Logged In from Firebase")
-                                               let myVC = MainVC.init(nibName: "MainVC", bundle: nil)
-                    
-                                               let myNav = UINavigationController.init(rootViewController: myVC)
-                                               myNav.modalTransitionStyle = .crossDissolve
-                                               myNav.modalPresentationStyle = .fullScreen
-                    let db = Firestore.firestore()
-                    db.collection("Users").document(user.uid).getDocument {
-                       doc, error in
-                        if let document = doc, document.exists {
-
-                            let dataDescription = document.data()?.values
-
-                            print("Document data: \(String(describing: dataDescription))")
-                        } else {
-                            print("Document does not exist")
-                            print(error as Any)
-                        }
-                        
-                    }
-                    
-                    
+                    let myVC = MainVC.init(nibName: "MainVC", bundle: nil)
+                    let myNav = UINavigationController.init(rootViewController: myVC)
+                    myVC.userUID = user.uid
+                    myNav.modalTransitionStyle = .crossDissolve
+                    myNav.modalPresentationStyle = .fullScreen
                     strongSelf.present(myNav, animated: true)
+                   // self?.fireStoreDOC(uid: user.uid)
                     
                 }
                 else
