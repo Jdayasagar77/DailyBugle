@@ -13,12 +13,13 @@ class HamburgerCell: UITableViewCell {
     @IBOutlet var iconImageView: UIImageView!
     @IBOutlet var titleLabel: UILabel!
     
+    @IBOutlet weak var hamburgerCustomView: UIView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
  
         // Background
-        self.backgroundColor = .clear
+        self.hamburgerCustomView.backgroundColor = .darkGray
         
         // Icon
         self.iconImageView.tintColor = .white

@@ -8,9 +8,9 @@
 import Foundation
 import FirebaseFirestore
 
-public class BaseClass: UIViewController {
-    let db = Firestore.firestore()
+ class BaseClass: UIViewController {
 
+    var user: UserModel?
    
     
     

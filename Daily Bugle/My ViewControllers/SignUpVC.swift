@@ -6,9 +6,7 @@
 //
 
 import UIKit
-import FirebaseCore
-import FirebaseAuth
-import FirebaseFirestore
+
 
 class SignUpVC: UIViewController {
     
@@ -17,8 +15,7 @@ class SignUpVC: UIViewController {
     let myIndexPath = [[0,1,2,3,4,5],[6,7,8,9]]
     var myImage: UIImage?
     var user : UserModel = UserModel()
-    let authenticate = Auth.auth()
-    let db = Firestore.firestore()
+
     
     @IBAction func closeAction(_ sender: UIButton) {
         self.dismiss(animated: true)
@@ -141,11 +138,11 @@ extension SignUpVC: UITableViewDataSource, UITableViewDelegate {
                 else {
                     
                 self.dismiss(animated: true)
-                self.authenticate.createUser(withEmail: self.user.email ?? "", password: self.user.password ?? "") {
+                    Utility.shared.auth.createUser(withEmail: self.user.email ?? "", password: self.user.password ?? "") {
                     authResult, error in
                     guard let authResult = authResult else {return}
                     debugPrint("\(String(describing: authResult.user.uid))")
-                    self.db.collection("Users").document("\(String(describing: authResult.user.uid))").setData([
+                        Utility.shared.db.collection("Users").document("\(String(describing: authResult.user.uid))").setData([
                 "name": "\(String(describing: self.user.name!))",
                 "email": "\(String(describing: self.user.email!))",
                 "mobileNumber":"\(String(describing: self.user.mobileNumber!))",
@@ -155,19 +152,15 @@ extension SignUpVC: UITableViewDataSource, UITableViewDelegate {
                 "pincode":"\(String(describing: self.user.pincode!))",
                 "profilePic" : "\(String(describing: self.user.profilePic!))"
                         ])
-                    print(error as Any)
-
+                    debugPrint(error as Any)
                     }
-                
             }
         }
             cell?.SubmitButtonCell.setTitle("Submit", for: .normal)
          return cell ?? UITableViewCell()
-            
         }
        
         else {
-            
             let cell = tableView.dequeueReusableCell(withIdentifier: "InputCell") as? InputCell
             cell?.inputText.placeholder =  dataArray[indexPath.section][indexPath.row]
             cell?.inputText.tag = myIndexPath[indexPath.section][indexPath.row]
@@ -179,7 +172,6 @@ extension SignUpVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
           return UITableView.automaticDimension
-
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

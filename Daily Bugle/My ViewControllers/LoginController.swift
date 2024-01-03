@@ -6,23 +6,18 @@
 //
 
 import UIKit
-import FirebaseCore
-import FirebaseAuth
-import FirebaseFirestore
 
 
 
-class LoginController: BaseClass {
-    
-    
+
+class LoginController: BaseClass, UserConfigurationDelegate {
+    var userUID: String?
     @IBOutlet weak var loginLogo: UIImageView!
     @IBOutlet weak var userNameTxtField: UITextField!
     @IBOutlet weak var passwordTxtField: UITextField!
     @IBOutlet weak var logInButton: UIButton!
-    @IBAction func logInAction(_ sender: UIButton)
-    
-    
-    {
+    @IBAction func logInAction(_ sender: UIButton) {
+        
         if ((userNameTxtField.text?.isEmpty) == nil || userNameTxtField.text?.isValidEmail() == false)
         {
             showMessage(title: "Enter a Valid Mail")
@@ -36,20 +31,62 @@ class LoginController: BaseClass {
         else if ((userNameTxtField.text?.isValidEmail()) == true)
         {
             passwordTxtField.isSecureTextEntry = true
-            Auth.auth().signIn(withEmail: userNameTxtField.text!, password: passwordTxtField.text!) { [weak self] authResult, error in
-            guard let strongSelf = self else { return }
+            
+            Utility.shared.auth.signIn(withEmail: userNameTxtField.text!, password: passwordTxtField.text!) { [weak self] authResult, error in
+                guard let strongSelf = self else { return }
                 if let user = authResult?.user {
                     
                     strongSelf.dismiss(animated: true)
-               //  Utility.shared.setDataWhenUserLogin(userEmail: user.email ?? "")
+                    //  Utility.shared.setDataWhenUserLogin(userEmail: user.email ?? "")
                     debugPrint("User \(user.uid as Any) Has Logged In from Firebase")
                     let myVC = MainVC.init(nibName: "MainVC", bundle: nil)
                     let myNav = UINavigationController.init(rootViewController: myVC)
-                    myVC.userUID = user.uid
                     myNav.modalTransitionStyle = .crossDissolve
                     myNav.modalPresentationStyle = .fullScreen
+                    myVC.userUIDDelegate = self
+                    
+                    self?.userUID = user.uid
+                    Utility.shared.db.collection("Users").document(user.uid ).getDocument { doc, error in
+                        
+                        let userData = doc?.data()
+                        let currentUser = UserModel()
+                        currentUser.name = userData?["name"] as? String ?? ""
+                        currentUser.email = userData?["email"] as? String ?? ""
+                        currentUser.profilePic = userData?["profilePic"] as? String ?? ""
+                        currentUser.address = userData?["address"] as? String ?? ""
+                        currentUser.state = userData?["state"] as? String ?? ""
+                        currentUser.pincode = userData?["pincode"] as? String ?? ""
+                        currentUser.mobileNumber = userData?["mobileNumber"] as? String ?? ""
+                        
+                        Utility.shared.setDataWhenUserLogin(user: currentUser, userUID: user.uid)
+                        
+                        if let result = Utility.shared.getSavedUserData() {
+                            debugPrint(result.email as Any)
+                        } else {
+                            
+                        }
+                        //                        debugPrint((currentUser.email ?? "") as String)
+                        //                        debugPrint((currentUser.address ?? "") as String)
+                        //                        debugPrint((currentUser.mobileNumber ?? "") as String)
+                        //                        debugPrint((currentUser.name ?? "") as String)
+                        //                        debugPrint((currentUser.state ?? "") as String)
+                        //                        debugPrint((currentUser.pincode ?? "") as String)
+                        //
+                    }
+                    
+                    
+                    
+                    //                        Utility.shared.db.collection("Users").document(user.uid).collection("savedArticles").getDocuments { doc, error in
+                    //
+                    //                            debugPrint(doc?.documents.first?.documentID as Any)
+                    //
+                    //                        }
+                    
+                    
+                    
+                    
                     strongSelf.present(myNav, animated: true)
-                   // self?.fireStoreDOC(uid: user.uid)
+                    // self?.fireStoreDOC(uid: user.uid)
                     
                 }
                 else
@@ -58,16 +95,16 @@ class LoginController: BaseClass {
                     debugPrint("User Entered Wrong Password or Mail While Logging")
                 }
             }
-                    debugPrint("Signed in as \(String(describing:  Auth.auth().currentUser?.email)) using Firebase Authentication")
+            debugPrint("Signed in as \(String(describing:  Utility.shared.auth.currentUser?.email)) using Firebase Authentication")
         }
-//        else
-//            {
-//            showMessage(title: "This User Does Not Exist, Please Sign Up")
-//            debugPrint("User Entered Mail Which Do Not Exist While Logging")
-//            }
+        //        else
+        //            {
+        //            showMessage(title: "This User Does Not Exist, Please Sign Up")
+        //            debugPrint("User Entered Mail Which Do Not Exist While Logging")
+        //            }
     }//Log In Action ends here
     
-
+    
     let circle1 = CAShapeLayer()
     let circle2 = CAShapeLayer()
     let circle3 = CAShapeLayer()
@@ -93,12 +130,12 @@ class LoginController: BaseClass {
     
     
     override func viewWillAppear(_ animated: Bool) {
-     self.loginLogo.image = UIImage(named: "bugle2")
+        self.loginLogo.image = UIImage(named: "bugle2")
         self.loginLogo.layer.cornerRadius = self.loginLogo.frame.size.width / 2
         self.loginLogo.clipsToBounds = true
     }
     
-
+    
     override func viewDidAppear(_ animated: Bool) {
         DispatchQueue.main.asyncAfter(deadline: .now()){
             self.animateMovement(myCircle: self.circle1, myPath: self.cirlePath1, myPostion1: CGPoint(x: 300, y: 60), myPostion2: CGPoint(x: 0, y: 650), myColor: UIColor.green, myOpacity: 0.5, myTransformation: 0.9, myTime: 3)
@@ -124,7 +161,7 @@ class LoginController: BaseClass {
         view.layer.addSublayer(circle4)
         view.layer.addSublayer(circle5)
         view.layer.addSublayer(circle6)
-       // fadeInOutA()
+        // fadeInOutA()
     }
     
     
@@ -134,13 +171,13 @@ class LoginController: BaseClass {
         passwordTxtField.isSecureTextEntry = true
         self.passwordTxtField.delegate = self
         self.userNameTxtField.delegate = self
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        //        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        //        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         self.setupToHideKeyboardOnTapOnView()
-
+        
     }
-
- 
+    
+    
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y == 0 {
@@ -148,7 +185,7 @@ class LoginController: BaseClass {
             }
         }
     }
-
+    
     @objc func keyboardWillHide(notification: NSNotification) {
         if self.view.frame.origin.y != 0 {
             self.view.frame.origin.y = 0
@@ -159,19 +196,19 @@ class LoginController: BaseClass {
     {
         myCircle.path  = myPath.cgPath
         myCircle.fillColor = myColor.cgColor
-    let animation = CABasicAnimation(keyPath: "position")
-//        animation.fromValue = CGPoint(x: circle1.frame.origin.x + (circle1.frame.size.width/2), y: circle1.frame.origin.y + (circle1.frame.size.height/2))
+        let animation = CABasicAnimation(keyPath: "position")
+        //        animation.fromValue = CGPoint(x: circle1.frame.origin.x + (circle1.frame.size.width/2), y: circle1.frame.origin.y + (circle1.frame.size.height/2))
         animation.fromValue = myPostion2
         animation.toValue = myPostion1
         animation.duration = myTime
-//        animation.timingFunction = CAMediaTimingFunction(name: <#T##CAMediaTimingFunctionName#>)
+        //        animation.timingFunction = CAMediaTimingFunction(name: <#T##CAMediaTimingFunctionName#>)
         animation.fillMode = .forwards
         animation.autoreverses = true
         animation.isRemovedOnCompletion = false
         animation.beginTime = CACurrentMediaTime()
         animation.repeatCount = .greatestFiniteMagnitude
         myCircle.add(animation, forKey: nil)
-    let animation1 = CABasicAnimation(keyPath: "opacity")
+        let animation1 = CABasicAnimation(keyPath: "opacity")
         animation1.fromValue = 0.0
         animation1.toValue = myOpacity
         animation1.duration = 4.0
@@ -179,7 +216,7 @@ class LoginController: BaseClass {
         animation1.autoreverses = true
         animation1.repeatCount = .greatestFiniteMagnitude
         myCircle.add(animation1, forKey: nil)
-    let animation2 = CABasicAnimation(keyPath: "transform.scale")
+        let animation2 = CABasicAnimation(keyPath: "transform.scale")
         animation2.fromValue = 0
         animation2.toValue = myTransformation
         animation2.duration = 3

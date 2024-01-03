@@ -19,8 +19,8 @@ struct NewsAPIBackend {
         decoder.dateDecodingStrategy = .iso8601
         return decoder
     }()
-
- 
+    
+    
     func fetchNews(category: Category, completion: @escaping(Result<[Article], APIError>) -> Void) {
         
         guard let url = generateNewsURL(from: category) else {
@@ -45,11 +45,11 @@ struct NewsAPIBackend {
                 }
             }
         }
-
+        
         task.resume()
         
     }
-  
+    
     
     private func generateNewsURL(from category: Category) -> URL? {
         var url = "https://newsapi.org/v2/top-headlines?"
@@ -80,30 +80,30 @@ enum Category: String, CaseIterable {
     var categoryName: String {
         
         switch self {
-                
-            case .general:
-                return "General"
-                
-            case .business:
-                return "Business"
-
-            case .technology:
-                return "Technology"
-
-            case .entertainment:
-                return "Entertainment"
-
-            case .sports:
-                return "Sports"
-
-            case .science:
-                return "Science"
-
-            case .health:
-                return "Health"
-
-            case .saved:
-                return "Saved"
+            
+        case .general:
+            return "General"
+            
+        case .business:
+            return "Business"
+            
+        case .technology:
+            return "Technology"
+            
+        case .entertainment:
+            return "Entertainment"
+            
+        case .sports:
+            return "Sports"
+            
+        case .science:
+            return "Science"
+            
+        case .health:
+            return "Health"
+            
+        case .saved:
+            return "Saved"
         }
     }
 }

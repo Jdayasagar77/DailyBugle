@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -54,9 +55,10 @@
                         <constraint firstAttribute="height" constant="100" id="0dj-Zc-ruO"/>
                     </constraints>
                 </stackView>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="McR-ar-gDr">
-                    <rect key="frame" x="8" y="167" width="377" height="651"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="McR-ar-gDr">
+                    <rect key="frame" x="8" y="183" width="377" height="635"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                 </tableView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
@@ -67,7 +69,7 @@
                 <constraint firstItem="McR-ar-gDr" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="8" id="AaE-bK-0kX"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="McR-ar-gDr" secondAttribute="trailing" constant="8" id="C66-5X-v94"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="gFM-sj-2Rr" secondAttribute="trailing" constant="50" id="Jj1-Do-M6F"/>
-                <constraint firstItem="McR-ar-gDr" firstAttribute="top" secondItem="gFM-sj-2Rr" secondAttribute="bottom" id="RWg-3n-NJj"/>
+                <constraint firstItem="McR-ar-gDr" firstAttribute="top" secondItem="gFM-sj-2Rr" secondAttribute="bottom" constant="16" id="RWg-3n-NJj"/>
                 <constraint firstItem="gFM-sj-2Rr" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="8" id="ayu-hf-O71"/>
             </constraints>
             <point key="canvasLocation" x="110.68702290076335" y="19.718309859154932"/>

@@ -6,30 +6,34 @@
 //
 
 import UIKit
-import FirebaseCore
-import FirebaseAuth
-import FirebaseFirestore
 
 
-class MainVC: UIViewController, UserConfigurationDelegate  {
+
+class MainVC: BaseClass, UserConfigurationDelegate  {
     
-    var userUID: String?
-    var user: UserModel?
     let myHamVC = HamburgerVC.init(nibName: "HamburgerVC", bundle: nil)
-    var myCategory: Category?
-    {
-        didSet{
+    
+    var userUID: String? {
+        debugPrint(userUIDDelegate?.userUID as Any)
+        //if Utility.shared.isUserLogin(){}
+        //You need to persist uid also in userdefaults
+        return userUIDDelegate == nil ? UserDefaults.standard.string(forKey: DefaultKeys.userUID) : userUIDDelegate?.userUID
+    }
+    
+    var userUIDDelegate: UserConfigurationDelegate?
+    
+    var myCategory: Category? {
+        didSet {
             print(self.myCategory?.rawValue as Any)
             self.viewDidLoad()
         }
     }
     
-    let newsConnection = NewsAPIBackend.shared
     @IBOutlet weak var mainTable: UITableView!
     @IBOutlet var hamburgerBtn: UIBarButtonItem!
     var isLoading: Bool = true
     var errorMessage: String? = nil
-    var myArticles: [Article]?
+    var myArticles: [Article]? 
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -46,35 +50,46 @@ class MainVC: UIViewController, UserConfigurationDelegate  {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        self.mainTable.register(UINib(nibName: "NewsFeedCell", bundle: nil), forCellReuseIdentifier: "NewsFeedCell")
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+               spinner.startAnimating()
+        self.view.addSubview(spinner)
+
+               spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+               spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
+                self.mainTable.register(UINib(nibName: "NewsFeedCell", bundle: nil), forCellReuseIdentifier: "NewsFeedCell")
         self.mainTable.delegate = self
         self.mainTable.dataSource = self
         self.mainTable.estimatedRowHeight = 300
         print(myCategory as Any)
-        newsConnection.fetchNews(category: myCategory ?? .general) { [weak self] result in
-            DispatchQueue.main.async {
-            self?.isLoading = false
-            switch result {
-                case .failure(let error):
-                    self?.errorMessage = error.localizedDescription
-                    print(error)
-                case .success(let news):
-                    print("--- success with \(news.count)")
-                let filteredArticles = news.filter { article in
-                    // Check if any of the properties in the article is nil
-                    return article.author != nil &&
-                           article.title != nil &&
-                           article.description != nil &&
-                           article.url != nil &&
-                           article.urlToImage != nil &&
-                           article.publishedAt != nil
-                }
-                    self?.myArticles = filteredArticles
-                    self?.mainTable.reloadData()
+            Utility.shared.newsConnection.fetchNews(category: myCategory ?? .general) { [weak self] result in
+                DispatchQueue.main.async {
+                    self?.isLoading = false
+                    switch result {
+                    case .failure(let error):
+                        self?.errorMessage = error.localizedDescription
+                        print(error)
+                    case .success(let news):
+                        print("--- success with \(news.count)")
+                        let filteredArticles = news.filter { article in
+                            // Check if any of the properties in the article is nil
+                            return article.author != nil &&
+                            article.title != nil &&
+                            article.description != nil &&
+                            article.url != nil &&
+                            article.urlToImage != nil &&
+                            article.publishedAt != nil
+                        }
+                        self?.myArticles = filteredArticles
+                        self?.mainTable.reloadData()
+                        spinner.stopAnimating()
+                    }
                 }
             }
-        }
-    }
+       
+       
+    } //ViewDidLoad
      
 }
 
@@ -82,6 +97,8 @@ class MainVC: UIViewController, UserConfigurationDelegate  {
 
 
 extension MainVC : UITableViewDelegate,UITableViewDataSource, GetNews {
+    
+    
     
     func getNews(category: Category) {
         self.myCategory = category
@@ -114,12 +131,10 @@ extension MainVC : UITableViewDelegate,UITableViewDataSource, GetNews {
         cell?.handler = {
             
           //  debugPrint(self.myHamVC.userConfig?.userUID as Any)
-            
          //   print(self.myArticles?[indexPath.row] as Any)
-            
             let newArticle = Article(source: self.myArticles![indexPath.row].source, author: self.myArticles![indexPath.row].author, title: self.myArticles![indexPath.row].title, description: self.myArticles![indexPath.row].description, url: self.myArticles![indexPath.row].url, urlToImage: self.myArticles![indexPath.row].urlToImage, publishedAt: self.myArticles![indexPath.row].publishedAt, content: self.myArticles![indexPath.row].content)
             
-            Firestore.firestore().collection("Users").document(self.myHamVC.userConfig!.userUID ?? "").collection("savedArticles").document("\(newArticle.title!)").setData([
+            Utility.shared.db.collection("Users").document(self.myHamVC.userConfig!.userUID ?? "").collection("savedArticles").document("\(newArticle.title!)").setData([
                 "author":newArticle.author!,
                 "title":newArticle.title!,
                 "description":newArticle.description!,
@@ -127,15 +142,14 @@ extension MainVC : UITableViewDelegate,UITableViewDataSource, GetNews {
                 "urlToImage":newArticle.urlToImage!,
                 "publishedAt":newArticle.publishedAt!
             ])
-         //   Firestore.firestore().collection("Users").document(self.myHamVC.userConfig!.userUID ?? "").collection("savedArticles").
-            Firestore.firestore().collection("Users").document(self.myHamVC.userConfig!.userUID ?? "").collection("savedArticles").getDocuments { doc, error in
+   
+            Utility.shared.db.collection("Users").document(self.myHamVC.userConfig!.userUID ?? "").collection("savedArticles").getDocuments { doc, error in
                 
                let isThere = doc?.documents.contains(where: { mydoc in
                    mydoc.documentID == newArticle.title
                 })
                 
                 debugPrint(isThere as Any)
-                
                 debugPrint(doc?.count as Any)
                 debugPrint(doc?.description as Any)
                 debugPrint(doc?.documents.first as Any)
@@ -164,7 +178,6 @@ extension MainVC : UITableViewDelegate,UITableViewDataSource, GetNews {
             
            //
         }
-       
         return cell ?? UITableViewCell()
     }
     

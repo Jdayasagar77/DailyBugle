@@ -14,8 +14,8 @@
             filePath = "Daily Bugle/My ViewControllers/HamburgerVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
             <Locations>
@@ -55,22 +55,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "51CB217F-504C-4F66-95E0-29189ED4233B"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Daily Bugle/My ViewControllers/HamburgerVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "0C8740A6-4C44-429D-A9B8-CB64122D038C"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -80,8 +64,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "16"
             endingLineNumber = "16"
-            landmarkName = "MainVC"
-            landmarkType = "3">
+            landmarkName = "userUID"
+            landmarkType = "24">
             <Locations>
                <Location
                   uuid = "0C8740A6-4C44-429D-A9B8-CB64122D038C - 601194a74021fa0b"
@@ -246,10 +230,10 @@
             filePath = "Daily Bugle/My ViewControllers/MainVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "18"
-            endingLineNumber = "18"
-            landmarkName = "MainVC"
-            landmarkType = "3">
+            startingLineNumber = "25"
+            endingLineNumber = "25"
+            landmarkName = "myCategory"
+            landmarkType = "24">
             <Locations>
                <Location
                   uuid = "8C09A0CF-2BE9-43E5-9321-6AB7D7672D36 - afa6806c7baa5790"

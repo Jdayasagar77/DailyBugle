@@ -20,10 +20,11 @@ class UserModel: Codable {
     var password: String?
     var confirmPassword: String?
     var savedArticles:[Article]?
+    
     init() {
         
     }
-
+    
     enum CodingKeys: String, CodingKey {
         
         case profilePic = "profilePic"
@@ -36,6 +37,6 @@ class UserModel: Codable {
         case pincode = "pincode"
         
     }
-
+    
     
 }

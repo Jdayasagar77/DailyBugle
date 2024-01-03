@@ -16,3 +16,6 @@ protocol UserConfigurationDelegate{
     var userUID: String? { get }
 }
 
+protocol SavedArticles {
+    func getSavedArticles(myArticles: [Article])
+}
