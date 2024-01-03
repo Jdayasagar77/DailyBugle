@@ -15,8 +15,6 @@ class MainVC: BaseClass, UserConfigurationDelegate  {
     
     var userUID: String? {
         debugPrint(userUIDDelegate?.userUID as Any)
-        //if Utility.shared.isUserLogin(){}
-        //You need to persist uid also in userdefaults
         return userUIDDelegate == nil ? UserDefaults.standard.string(forKey: DefaultKeys.userUID) : userUIDDelegate?.userUID
     }
     
