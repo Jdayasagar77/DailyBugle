@@ -11,7 +11,6 @@ struct NewsAPIBackend {
     
     static let shared = NewsAPIBackend()
     private init() {}
-    //0b5daaadb04e4948b3bfc21ebaf29169
     private let session = URLSession.shared
     private let jsonDecoder: JSONDecoder = {
         let decoder = JSONDecoder()
