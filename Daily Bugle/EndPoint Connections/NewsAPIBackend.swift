@@ -11,8 +11,7 @@ struct NewsAPIBackend {
     
     static let shared = NewsAPIBackend()
     private init() {}
-    
-    private let apiKey = "0b5daaadb04e4948b3bfc21ebaf29169"
+    //0b5daaadb04e4948b3bfc21ebaf29169
     private let session = URLSession.shared
     private let jsonDecoder: JSONDecoder = {
         let decoder = JSONDecoder()
@@ -23,13 +22,20 @@ struct NewsAPIBackend {
     
     func fetchNews(category: Category, completion: @escaping(Result<[Article], APIError>) -> Void) {
         
-        guard let url = generateNewsURL(from: category) else {
+        guard let value = ProcessInfo.processInfo.environment["NewsAPI"] else {
+            debugPrint("Environment variable not set.")
+            return
+        }
+        
+        guard let url = generateNewsURL(from: category, apiKey: value) else {
             let error = APIError.badURL
             completion(Result.failure(error))
             return
         }
+        
         let task = URLSession.shared.dataTask(with: url) {(data , response, error) in
             
+          
             if let error = error as? URLError {
                 completion(Result.failure(APIError.url(error)))
             }else if  let response = response as? HTTPURLResponse, !(200...299).contains(response.statusCode) {
@@ -39,7 +45,7 @@ struct NewsAPIBackend {
                     let news = try jsonDecoder.decode(NewsAPI.self, from: data)
                     
                     completion(Result.success(news.articles!))
-                    
+                  
                 }catch {
                     completion(Result.failure(APIError.parsing(error as? DecodingError)))
                 }
@@ -51,7 +57,7 @@ struct NewsAPIBackend {
     }
     
     
-    private func generateNewsURL(from category: Category) -> URL? {
+    private func generateNewsURL(from category: Category, apiKey: String) -> URL? {
         var url = "https://newsapi.org/v2/top-headlines?"
         url += "apiKey=\(apiKey)"
         url += "&language=en"
