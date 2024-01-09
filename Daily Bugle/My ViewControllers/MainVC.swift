@@ -9,7 +9,8 @@ import UIKit
 
 
 
-class MainVC: BaseClass, UserConfigurationDelegate  {
+class MainVC: BaseClass, UserConfigurationDelegate {
+        
     
     let myHamVC = HamburgerVC.init(nibName: "HamburgerVC", bundle: nil)
     
@@ -19,7 +20,7 @@ class MainVC: BaseClass, UserConfigurationDelegate  {
     }
     
     var userUIDDelegate: UserConfigurationDelegate?
-    
+    var savedArticleExists: Bool? = false
     var myCategory: Category? {
         didSet {
             print(self.myCategory?.rawValue as Any)
@@ -86,7 +87,6 @@ class MainVC: BaseClass, UserConfigurationDelegate  {
                 }
             }
        
-       
     } //ViewDidLoad
      
 }
@@ -95,8 +95,6 @@ class MainVC: BaseClass, UserConfigurationDelegate  {
 
 
 extension MainVC : UITableViewDelegate,UITableViewDataSource, GetNews {
-    
-    
     
     func getNews(category: Category) {
         self.myCategory = category
@@ -111,51 +109,75 @@ extension MainVC : UITableViewDelegate,UITableViewDataSource, GetNews {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        
+        
         let cell = self.mainTable.dequeueReusableCell(withIdentifier: "NewsFeedCell") as? NewsFeedCell
         
         cell?.articleTitle.text = self.myArticles?[indexPath.row].title
         cell?.articlePublished.text =  self.myArticles?[indexPath.row].publishedAt ?? ""
+        
         if self.myArticles?[indexPath.row].urlToImage != nil {
             cell?.articleImage.loadImageUsingCache(withUrl: (self.myArticles?[indexPath.row].urlToImage)!)
         } else {
             cell?.articleImage.image = UIImage(named: "Loading")
         }
+        
         if indexPath.row.isOdd {
             cell?.contentView.backgroundColor = .gray
             cell?.articleTitle.textColor = .white
             cell?.articlePublished.textColor = .white
             cell?.saveButton.tintColor = .white
+        } else {
+            cell?.contentView.backgroundColor = .white
+            cell?.articleTitle.textColor = .black
+            cell?.articlePublished.textColor = .black
+            cell?.saveButton.tintColor = .red
         }
-        cell?.handler = {
+     
+      
+            /*
+            if indexPath.row.isOdd {
+                cell?.saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .highlighted)
+            } else {
+                cell?.saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .highlighted)
+                        }
+            debugPrint("Yo Bro")
+        */
             
           //  debugPrint(self.myHamVC.userConfig?.userUID as Any)
          //   print(self.myArticles?[indexPath.row] as Any)
+       
             let newArticle = Article(source: self.myArticles![indexPath.row].source, author: self.myArticles![indexPath.row].author, title: self.myArticles![indexPath.row].title, description: self.myArticles![indexPath.row].description, url: self.myArticles![indexPath.row].url, urlToImage: self.myArticles![indexPath.row].urlToImage, publishedAt: self.myArticles![indexPath.row].publishedAt, content: self.myArticles![indexPath.row].content)
             
-            Utility.shared.db.collection("Users").document(self.myHamVC.userConfig!.userUID ?? "").collection("savedArticles").document("\(newArticle.title!)").setData([
-                "author":newArticle.author!,
-                "title":newArticle.title!,
-                "description":newArticle.description!,
-                "url":newArticle.url!,
-                "urlToImage":newArticle.urlToImage!,
-                "publishedAt":newArticle.publishedAt!
-            ])
-   
-            Utility.shared.db.collection("Users").document(self.myHamVC.userConfig!.userUID ?? "").collection("savedArticles").getDocuments { doc, error in
+        
+        Utility.shared.db.collection("Users").document(self.userUID ?? "").collection("savedArticles").getDocuments { doc, error in
+            let isThere = doc?.documents.contains(where: { mydoc in
+               mydoc.documentID == newArticle.title
                 
-               let isThere = doc?.documents.contains(where: { mydoc in
-                   mydoc.documentID == newArticle.title
-                })
-                
-                debugPrint(isThere as Any)
-                debugPrint(doc?.count as Any)
-                debugPrint(doc?.description as Any)
-                debugPrint(doc?.documents.first as Any)
-                debugPrint(doc?.documents.first?.documentID as Any)
-
+            })
+            debugPrint(self.savedArticleExists as Any)
+            if isThere! {
+                cell?.saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .highlighted)
             }
             
-            /*    .addDocument(data: [
+        }
+     
+        cell?.handler = {
+                Utility.shared.db.collection("Users").document(self.userUID  ?? "").collection("savedArticles").document("\(newArticle.title!)").setData([
+                    "author":newArticle.author!,
+                    "title":newArticle.title!,
+                    "description":newArticle.description!,
+                    "url":newArticle.url!,
+                    "urlToImage":newArticle.urlToImage!,
+                    "publishedAt":newArticle.publishedAt!
+                ])
+                cell?.saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .highlighted)
+            debugPrint("Yo Bro")
+        }
+           
+       
+        /*
+                .addDocument(data: [
                 "author":newArticle.author!,
                 "title":newArticle.title!,
                 "description":newArticle.description!,
@@ -166,17 +188,16 @@ extension MainVC : UITableViewDelegate,UITableViewDataSource, GetNews {
             ]) { error in
                 debugPrint(error as Any)
             }
-             */
-            
-                /*
+         
+           */
+        /*
                 .setData([
                 "savedArticles": Article(source: self.myArticles![indexPath.row].source, author: self.myArticles![indexPath.row].author, title: self.myArticles![indexPath.row].title, description: self.myArticles![indexPath.row].description, url: self.myArticles![indexPath.row].url, urlToImage: self.myArticles![indexPath.row].urlToImage, publishedAt: self.myArticles![indexPath.row].publishedAt, content: self.myArticles![indexPath.row].content)
             ], merge: true)
-            */
-            
-           //
-        }
+        */
+          
         return cell ?? UITableViewCell()
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

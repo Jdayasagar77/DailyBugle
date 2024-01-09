@@ -29,6 +29,7 @@ class HamburgerVC: BaseClass {
         HamModel(icon: UIImage(named: "Ham4") ?? UIImage(), title: .science),
         HamModel(icon: UIImage(named: "Ham1") ?? UIImage(), title: .health),
         HamModel(icon: UIImage(named: "Ham1") ?? UIImage(), title: .sports),
+        HamModel(icon: UIImage(systemName: "bookmark.fill") ?? UIImage(), title: .saved)
         
     ]
     
@@ -128,7 +129,7 @@ extension HamburgerVC: UITableViewDelegate, UITableViewDataSource {
         
         cell.selectionStyle = .gray
         
-        
+      
         //     cell.backgroundColor = .magenta
         
         // Highlighted color
@@ -141,12 +142,20 @@ extension HamburgerVC: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //        DispatchQueue.main.async {
-        if self.newsDelegate != nil {
+             //   DispatchQueue.main.async {
+        if self.newsDelegate != nil && self.menu[indexPath.row].title.categoryName != "Saved" {
             self.newsDelegate?.getNews(category:  self.menu[indexPath.row].title )
             navigationController?.popViewController(animated: true)
-        } else {
-            print("Delegate is nil")
+        }
+        else {
+            debugPrint("Delegate is nil")
+        }
+        
+        if self.menu[indexPath.row].title.categoryName == "Saved" {
+           let savedVC = SavedVC.init(nibName: "SavedVC", bundle: nil)
+           savedVC.userUID = self.userConfig?.userUID
+           debugPrint("Navigation Pushed to Saved")
+            self.navigationController?.pushViewController(savedVC, animated: true)
         }
         //  }
     }

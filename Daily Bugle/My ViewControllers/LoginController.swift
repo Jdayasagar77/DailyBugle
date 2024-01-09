@@ -11,11 +11,13 @@ import UIKit
 
 
 class LoginController: BaseClass, UserConfigurationDelegate {
+    
     var userUID: String?
     @IBOutlet weak var loginLogo: UIImageView!
     @IBOutlet weak var userNameTxtField: UITextField!
     @IBOutlet weak var passwordTxtField: UITextField!
     @IBOutlet weak var logInButton: UIButton!
+    
     @IBAction func logInAction(_ sender: UIButton) {
         
         if ((userNameTxtField.text?.isEmpty) == nil || userNameTxtField.text?.isValidEmail() == false)
@@ -137,22 +139,28 @@ class LoginController: BaseClass, UserConfigurationDelegate {
     
     
     override func viewDidAppear(_ animated: Bool) {
-        DispatchQueue.main.asyncAfter(deadline: .now()){
+        
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
             self.animateMovement(myCircle: self.circle1, myPath: self.cirlePath1, myPostion1: CGPoint(x: 300, y: 60), myPostion2: CGPoint(x: 0, y: 650), myColor: UIColor.green, myOpacity: 0.5, myTransformation: 0.9, myTime: 3)
         }
-        DispatchQueue.main.asyncAfter(deadline: .now()+2){
+        
+        DispatchQueue.main.asyncAfter(deadline: .now()+2) {
             self.animateMovement(myCircle: self.circle2, myPath: self.cirlePath2, myPostion1: CGPoint(x: 100, y: 250), myPostion2: CGPoint(x: 350, y: 50), myColor: UIColor.blue, myOpacity: 0.8, myTransformation: 0.6, myTime: 2)
         }
-        DispatchQueue.main.asyncAfter(deadline: .now()+1){
+        
+        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
             self.animateMovement(myCircle: self.circle3, myPath: self.cirlePath3, myPostion1: CGPoint(x: 250, y: 175), myPostion2: CGPoint(x: 75, y: 0), myColor: UIColor.lightGray, myOpacity: 0.6, myTransformation: 0.8, myTime: 4)
         }
-        DispatchQueue.main.asyncAfter(deadline: .now()+1){
+        
+        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
             self.animateMovement(myCircle: self.circle4, myPath: self.cirlePath4, myPostion1: CGPoint(x: 200, y: 0), myPostion2: CGPoint(x: 190, y: 550), myColor: UIColor.cyan, myOpacity: 0.4, myTransformation: 0.9, myTime: 1)
         }
-        DispatchQueue.main.asyncAfter(deadline: .now()){
+        
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
             self.animateMovement(myCircle: self.circle5, myPath: self.cirlePath5, myPostion1: CGPoint(x: 150, y: 500), myPostion2: CGPoint(x: 300, y: 150), myColor: UIColor.yellow, myOpacity: 0.2, myTransformation: 0.8, myTime: 3)
         }
-        DispatchQueue.main.asyncAfter(deadline: .now()){
+        
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
             self.animateMovement(myCircle: self.circle6, myPath: self.cirlePath6, myPostion1: CGPoint(x: 25, y: 150), myPostion2: CGPoint(x: 130, y: 450), myColor: UIColor.red, myOpacity: 0.2, myTransformation: 0.7, myTime: 2)
         }
         view.layer.addSublayer(circle1)

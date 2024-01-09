@@ -8,8 +8,6 @@
 import Foundation
 import UIKit
 
-
-
 extension UIViewController {
     
     func isVisible() -> Bool {
@@ -19,7 +17,6 @@ extension UIViewController {
     func getDocumentsDirectory() -> URL {
         // find all possible documents directories for this user
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        
         // just send back the first one, which ought to be the only one
         return paths[0]
     }
@@ -43,7 +40,6 @@ extension UIViewController {
     // With this extension you can access the MainViewController from the child view controllers.
     func revealViewController() -> MainVC? {
         var viewController: UIViewController? = self
-        
         if viewController != nil && viewController is MainVC {
             return viewController! as? MainVC
         }
@@ -55,12 +51,11 @@ extension UIViewController {
         }
         return nil
     }
-    
 }
 
 
 
-extension LoginController : UITextFieldDelegate{
+extension LoginController : UITextFieldDelegate {
     
     /**
      * Called when 'return' key pressed. return NO to ignore.
@@ -116,6 +111,7 @@ extension String {
         let result = emailTest.evaluate(with: self)
         return result
     }
+    
 }
 
 
@@ -144,11 +140,11 @@ extension Int {
 
 
 
-let imageCache = NSCache<NSString, AnyObject>()
 
 extension UIImageView {
     
     func loadImageUsingCache(withUrl urlString : String) {
+        let imageCache = NSCache<NSString, AnyObject>()
         let url = URL(string: urlString)
         self.image = nil
         // check cached image
@@ -158,10 +154,12 @@ extension UIImageView {
         }
         // if not, download image from url
         URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) in
+            
             if error != nil {
                 print(error!)
                 return
             }
+            
             DispatchQueue.main.async {
                 if let image = UIImage(data: data!) {
                     imageCache.setObject(image, forKey: urlString as NSString)

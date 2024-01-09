@@ -29,7 +29,6 @@ class SignUpVC: UIViewController {
         
         self.navigationController?.isNavigationBarHidden = true
         
-     
         self.signUpTableView.register(UINib(nibName: "ProfilePicCell", bundle: nil), forCellReuseIdentifier: "ProfilePicCell")
         self.signUpTableView.register(UINib(nibName: "SubmitButtonCell", bundle: nil), forCellReuseIdentifier: "SubmitButtonCell")
         self.signUpTableView.register(UINib(nibName: "InputCell", bundle: nil), forCellReuseIdentifier: "InputCell")
