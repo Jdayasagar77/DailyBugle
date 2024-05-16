@@ -1,0 +1,78 @@
+/* 
+  Localizable.strings
+  NewsApp
+
+  Created by Aleyna Aktaş on 17.09.2023.
+  
+*/
+
+// Settings
+"dark_mood" = "Koyu mod";
+"get_started_button_title" = "Hadi Başlayalım";
+"next_button_title" = "Sıradaki";
+"language_text" = "Dil";
+"account_text" = "Hesap";
+"editAccount_text" = "Hesabı Düzenle";
+"change_password_text" = "Parolayı Değiştir";
+"security_text" = "Gizlilik ve Güvenlik Yardımı";
+"sign_out_text" = "Çıkış Yap";
+"general_text" = "Genel";
+
+"Latest News" = "Son haberler";
+
+// Onboarding
+"onboarding_title1" = "Hoş Geldiniz";
+"onboarding_title2" = "Kategorileri Keşfedin";
+"onboarding_title3" = "Favori Haberlerinizi Kaydedin";
+
+"onboarding_desc1" = "Haberlere daha yakın olmak için ilk adımınızı atın. En son haberlere ve güncellemelere kolayca erişin.";
+"onboarding_desc2" = "İlgi alanlarınıza uygun kategorileri seçerek haberlerinizi özelleştirin. Spor, teknoloji, siyaset ve daha fazlasını keşfedin.";
+"onboarding_desc3" = "Yakından takip etmek istediğiniz haberleri favorilerinize ekleyin. İstediğiniz zaman hızlıca erişin.";
+
+// Register - Login
+"fullname_placeholder" = "Ad Soyad";
+"email_placeholder" = "E-posta";
+"password_placeholder" = "Parola";
+"create_account_text" = "Hesap Oluştur";
+"register_description" = "Haber Uygulamasına hoş geldiniz, lütfen giriş yapmak için aşağıdaki bilgileri doldurun";
+"security_policy" = "Gizlilik ve Güvenlik Politikamızı okuyun.";
+"register_button" = "Kaydol";
+"has_account_text" = "Zaten bir hesabınız mı var?";
+"login_button" = "Giriş Yap";
+"welcome_text" = "Hoş Geldiniz";
+"login_description" = "Giriş yapmak için lütfen aşağıdaki bilgileri girin";
+"forgot_password" = "Parolamı Unuttum?";
+"privacyAndSecurity_text" = "Gizlilik ve Güvenlik";
+
+
+// Search
+"search_title" = "Arama Yap";
+"search_placeholder" = "Haber Ara...";
+"search_empty_text" = "Aranan haber bulunamadı";
+"favorites_empty_text" = "Henüz favori haberin yok";
+
+
+// Favorites
+"favorites_title" = "Favorilerim";
+
+// Edit Account
+"edit_photo_button" = "Fotoğrafı Güncelle";
+"save_button" = "Kaydet";
+"edit_account_title" = "Hesabı Düzenle";
+"back" = "Geri";
+
+// Side Menu - Category
+"General" = "Genel";
+"Business" = "İş";
+"Entertainment" = "Eğlence";
+"Health" = "Sağlık";
+"Science" = "Bilim";
+"Sports" = "Spor";
+"Technology" = "Teknoloji";
+"hello" = "Merhaba";
+
+// privacy
+"privacy_policy_text" = "Gizlilik Politikası\n\nYürürlük Tarihi: 17.09.2023\n\n1. Giriş\n\nNews uygulamamızı kullanırken kişisel bilgilerinizi koruma ve güvence altına alma taahhüdündeyiz. Bu Gizlilik Politikası, mobil uygulamamızı ve hizmetlerimizi kullanırken bilgilerinizi nasıl topladığımızı, kullanığımızı, açıkladığımızı ve koruduğumuzu anlatır.\n\n2. Bilgi Toplama\n\n2.1. Kişisel Bilgiler: Adınız, e-posta adresiniz ve iletişim bilgileriniz gibi belirli kişisel bilgilerinizi gönüllü olarak bize sağladığınızda toplayabiliriz.\n\n2.2. Kullanım Bilgileri: Uygulamamızı nasıl kullandığınıza dair bilgileri toplayabiliriz, bu bilgiler cihaz tipiniz, IP adresiniz ve gezinme davranışınız gibi bilgileri içerebilir.\n\n3. Bilgilerinizi Nasıl Kullanıyoruz\n\n3.1. Topladığımız bilgileri hizmet sunmak ve geliştirmek, deneyiminizi özelleştirmek ve güncellemeleri ve bildirimleri size göndermek için kullanırız.\n\n3.2. Kişisel bilgilerinizi üçüncü taraflara satmıyor, kiralamıyor veya ticaretini yapmıyoruz.\n\n4. Veri Güvenliği\n\nVerilerinizi yetkisiz erişim, açıklama, değiştirme veya yok etmeye karşı korumak için makul önlemler alıyoruz.\n\n5. Bu Gizlilik Politikasının Değişiklikleri\n\nGizlilik Politikamızı zaman zaman güncelleyebiliriz. Herhangi bir değişiklik güncellenmiş politikayı uygulamamızda yayınladığımızda etkili olacaktır.\n\n6. Bize Ulaşın\n\nGizlilik Politikamızla ilgili herhangi bir sorunuz veya endişeniz varsa, lütfen [İletişim Bilgileriniz] üzerinden bizimle iletişime geçin.";
+
+// Settings
+"settings_text" = "Ayarlar";

@@ -1,0 +1,77 @@
+/* 
+  Localizable.strings
+  NewsApp
+
+  Created by Aleyna Aktaş on 17.09.2023.
+  
+*/
+
+// Settings
+"dark_mood" = "Dark Mood";
+"get_started_button_title" = "Get Started";
+"next_button_title" = "Next";
+"language_text" = "Language";
+"account_text" = "Account";
+"editAccount_text" = "Edit Account";
+"change_password_text" = "Change Password";
+"security_text" = "Privacy and Security Help";
+"sign_out_text" = "Sign Out";
+"general_text" = "General";
+
+"Latest News" = "Latest News";
+
+// Onboarding
+"onboarding_title1" = "Welcome";
+"onboarding_title2" = "Explore Categories";
+"onboarding_title3" = "Save Your Favorite News";
+
+"onboarding_desc1" = "Take your first step to get closer to the news with us. Easily access the latest news and updates.";
+"onboarding_desc2" = "Customize your news by selecting categories that match your interests. Discover sports, technology, politics, and more.";
+"onboarding_desc3" = "Add the news you want to follow closely to your favorites. Access them quickly whenever you want.";
+
+// Register - Login
+"fullname_placeholder" = "Full Name";
+"email_placeholder" = "Email";
+"password_placeholder" = "Password";
+"create_account_text" = "Create Account";
+"register_description" = "Welcome to the News App, please enter the information below to create an account for you";
+"security_policy" = "Read our Privacy and Security Policy.";
+"register_button" = "Register";
+"has_account_text" = "Already have an account?";
+"login_button" = "Login";
+"welcome_text" = "Welcome";
+"login_description" = "Please enter the information below to login";
+"forgot_password" = "Forgot Password?";
+"privacyAndSecurity_text" = "Privacy And Security";
+
+// Search
+"search_title" = "Search";
+"search_placeholder" = "Search News...";
+"search_empty_text" = "Search news not found";
+"favorites_empty_text" = "You don't have any favorite news yet.";
+
+// Favorites
+"favorites_title" = "Bookmarks";
+
+// Edit Account
+"edit_photo_button" = "Edit Photo";
+"save_button" = "Save";
+"edit_account_title" = "Edit Account";
+"back" = "Back";
+
+// Base.lproj/Localizable.strings (Ana dil - İngilizce)
+"General" = "General";
+"Business" = "Business";
+"Entertainment" = "Entertainment";
+"Health" = "Health";
+"Science" = "Science";
+"Sports" = "Sports";
+"Technology" = "Technology";
+"hello" = "Hello";
+
+//privacy
+"privacy_policy_text" = "Privacy Policy\n\nEffective Date: 19.07.2023\n\n1. Introduction\n\nWelcome to News. We are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy outlines how we collect, use, disclose, and safeguard your information when you use our mobile application and services.\n\n2. Information We Collect\n\n2.1. Personal Information: We may collect certain personal information, such as your name, email address, and contact details when you voluntarily provide it to us.\n\n2.2. Usage Information: We may collect information about how you use our app, including your device type, IP address, and browsing behavior.\n\n3. How We Use Your Information\n\n3.1. We use the information we collect to provide and improve our services, customize your experience, and send you updates and notifications.\n\n3.2. We do not sell, rent, or trade your personal information to third parties.\n\n4. Data Security\n\nWe take reasonable measures to protect your data from unauthorized access, disclosure, alteration, or destruction.\n\n5. Changes to this Privacy Policy\n\nWe may update our Privacy Policy from time to time. Any changes will be effective upon posting the updated policy on our app.\n\n6. Contact Us\n\nIf you have any questions or concerns about our Privacy Policy, please contact us at [Your Contact Information].";
+
+// Settings
+"settings_text" = "Settings";
+
